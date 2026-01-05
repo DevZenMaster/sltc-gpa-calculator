@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SLTC GPA Calculator 🎓
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0-38B2AC?style=for-the-badge&logo=tailwind-css)
+![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel)
 
-First, run the development server:
+The **unofficial** but definitive academic companion for the **Faculty of Computing & IT (Batch of 2028)** at Sri Lanka Technology Campus (SLTC).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**[🚀 View Live Demo](https://sltc-gpa-calculator.vercel.app)** *(Replace with your actual Vercel link once deployed)*
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⚡ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This isn't just a calculator; it's a full academic tracker.
 
-## Learn More
+* **📚 Pre-loaded Curriculum:** Includes **all 8 semesters** of Core & Elective modules for:
+    * BSc Hons in Software Engineering
+    * BSc Hons in Cloud Computing
+    * BSc Hons in Cyber Security
+    * BSc Hons in Data Science
+    * Degree in Applied IT
+* **📊 Real-time Analytics:** Instantly calculates:
+    * Semester GPA
+    * Yearly GPA (Year 1, 2, 3, 4)
+    * Final Degree GPA
+* **🎯 Custom Electives:** Smart dropdowns filter electives based on your specific semester and degree.
+* **📱 100% Responsive:** Works perfectly on mobile phones, tablets, and desktops.
+* **🔒 Privacy First:** No database. No login. All calculations happen locally in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* **Framework:** [Next.js 14](https://nextjs.org/) (App Router)
+* **Language:** [TypeScript](https://www.typescriptlang.org/) (Strict typing)
+* **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+* **Icons:** [Lucide React](https://lucide.dev/)
+* **Deployment:** [Vercel](https://vercel.com/)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 Getting Started
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Follow these steps to run the project locally on your machine.
+
+### Prerequisites
+
+* Node.js (v18 or higher)
+* npm or yarn
+
+### Installation
+
+1.  **Clone the repository**
+    ```bash
+    git clone [https://github.com/YOUR_USERNAME/sltc-gpa-calculator.git](https://github.com/YOUR_USERNAME/sltc-gpa-calculator.git)
+    cd sltc-gpa-calculator
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server**
+    ```bash
+    npm run dev
+    ```
+
+4.  Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 📖 How to Use
+
+1.  **Select Degree:** Choose your program from the dropdown (e.g., Software Engineering).
+2.  **Select Semester:** Click on the tabs (1-8). Core modules will auto-load.
+3.  **Enter Grades:** Select your grade (A+, A, A-, etc.) for each module.
+4.  **Add Electives:** Use the dropdown at the bottom to add specific electives for that semester.
+5.  **View Results:** Check the "GPA Dashboard" at the top to see your cumulative progress.
+
+---
+
+## 📝 Data Source & Accuracy
+
+* **Source:** *SLTC Faculty of Computing and IT - Student Handbook (Batch of 2028)*.
+* **Grading Schema:** Based on **Table 18** of the handbook.
+    * `A+` = 4.0
+    * `A` = 4.0
+    * `A-` = 3.7
+    * `E (Weak)` = 0.7 (Specific to SLTC)
+    * `E` = 0.0
+
+> **⚠️ Disclaimer:** This tool is for estimation purposes only. Always verify your official results with the SLTC Registrar's office.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! If you find a missing module or a calculation error:
+
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/NewModule`)
+3.  Commit your Changes (`git commit -m 'Add missing elective'`)
+4.  Push to the Branch (`git push origin feature/NewModule`)
+5.  Open a Pull Request
+
+---
+
+## 📜 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+Made with ❤️ by **[DevZenMaster](https://github.com/YOUR_USERNAME)** for the SLTC Community.
