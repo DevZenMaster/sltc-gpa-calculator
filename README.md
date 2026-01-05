@@ -1,13 +1,13 @@
 # SLTC GPA Calculator 🎓
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Site-2ea44f?style=for-the-badge&logo=vercel)](https://sltc-gpa-calculator.vercel.app)
+
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0-38B2AC?style=for-the-badge&logo=tailwind-css)
 ![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel)
 
 The **unofficial** but definitive academic companion for the **Faculty of Computing & IT (Batch of 2028)** at Sri Lanka Technology Campus (SLTC).
-
-**[🚀 View Live Demo](https://sltc-gpa-calculator.vercel.app)** *(Replace with your actual Vercel link once deployed)*
 
 ---
 
@@ -54,7 +54,7 @@ Follow these steps to run the project locally on your machine.
 
 1.  **Clone the repository**
     ```bash
-    git clone [https://github.com/YOUR_USERNAME/sltc-gpa-calculator.git](https://github.com/YOUR_USERNAME/sltc-gpa-calculator.git)
+    git clone [https://github.com/DevZenMaster/sltc-gpa-calculator.git](https://github.com/DevZenMaster/sltc-gpa-calculator.git)
     cd sltc-gpa-calculator
     ```
 
@@ -114,4 +114,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-Made with ❤️ by **[DevZenMaster](https://github.com/YOUR_USERNAME)** for the SLTC Community.
+Made with ❤️ by **[DevZenMaster](https://github.com/DevZenMaster)** for the SLTC Community.
