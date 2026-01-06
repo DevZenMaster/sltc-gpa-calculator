@@ -1,22 +1,36 @@
 import Link from "next/link";
+import Logo from "@/components/Logo"; // Import the new Logo
 
 export default function Navbar() {
   return (
-    <nav className="bg-slate-900 border-b border-slate-800 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center font-bold">
-              S
-            </div>
-            <Link href="/" className="text-xl font-bold tracking-tight">
-              SLTC <span className="text-blue-400">GPA</span>
-            </Link>
-          </div>
-          <div className="flex space-x-6">
-            <Link href="/" className="hover:text-blue-400 transition">Home</Link>
-            <Link href="/calculator" className="hover:text-blue-400 transition">Calculator</Link>
-          </div>
+    <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        
+        {/* Logo Section */}
+        <Link href="/" className="flex items-center gap-2 group">
+          {/* Replaced old "S" div with new Logo Component */}
+          <Logo className="w-8 h-8 group-hover:scale-105 transition-transform" />
+          
+          <span className="font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
+            SLTC GPA
+          </span>
+        </Link>
+
+        {/* Links Section */}
+        <div className="flex items-center gap-4">
+          <Link 
+            href="https://github.com/DevZenMaster" 
+            target="_blank"
+            className="hidden md:block text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors"
+          >
+            GitHub
+          </Link>
+          <Link 
+            href="/calculator" 
+            className="px-4 py-2 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/20"
+          >
+            Open Calculator
+          </Link>
         </div>
       </div>
     </nav>
