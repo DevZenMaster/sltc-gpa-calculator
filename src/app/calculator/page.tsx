@@ -7,7 +7,8 @@ import PrintableReport from "@/components/PrintableReport";
 import { Module, DegreeModuleData, ModuleType } from "@/types/module";
 import { calculateGPA, getDegreeClass, getTotalCreditsAndPoints, calculateRequiredGPA } from "@/utils/gpa";
 import { DEGREES } from "@/data/degrees";
-import { Printer, TrendingUp, Award, User, ArrowLeft } from "lucide-react"; 
+// Added BarChart for the progress icon
+import { Printer, TrendingUp, Award, User, ArrowLeft, BarChart } from "lucide-react"; 
 
 type DegreeState = {
   [key: string]: Module[];
@@ -19,7 +20,6 @@ export default function CalculatorPage() {
   const [activeSemester, setActiveSemester] = useState("1"); 
   const [availableElectives, setAvailableElectives] = useState<DegreeModuleData[]>([]);
 
-  // User Details (Default to empty string)
   const [studentName, setStudentName] = useState("");
   const [studentId, setStudentId] = useState("");
   const [batch, setBatch] = useState("");
@@ -77,7 +77,6 @@ export default function CalculatorPage() {
     setSemesterData({ ...semesterData, [activeSemester]: currentModules.filter((m) => m.id !== id) });
   };
 
-  // --- CALCULATIONS ---
   const getModulesForSemesters = (semesters: string[]) => {
     let all: Module[] = [];
     semesters.forEach(sem => { if (semesterData[sem]) all = [...all, ...semesterData[sem]]; });
@@ -90,10 +89,22 @@ export default function CalculatorPage() {
   
   const { totalPoints, totalCredits } = getTotalCreditsAndPoints(allModules);
   const degreeClass = getDegreeClass(gpaFinal);
+
+  // --- PROGRESS CALCULATIONS ---
+  // Count modules that have a grade entered
+  const completedModules = allModules.filter(m => m.grade !== "").length;
+  const totalPlannedModules = allModules.length;
+  const progressPercentage = totalPlannedModules > 0 
+    ? Math.round((completedModules / totalPlannedModules) * 100) 
+    : 0;
+
+  // Credits progress (Assuming 120 standard for SLTC)
+  const targetCredits = 120;
+  const creditProgress = Math.min(Math.round((totalCredits / targetCredits) * 100), 100);
   
-  const requiredForFirst = calculateRequiredGPA(totalPoints, totalCredits, 3.70, 120);
-  const requiredForSecondUpper = calculateRequiredGPA(totalPoints, totalCredits, 3.30, 120);
-  const requiredForSecondLower = calculateRequiredGPA(totalPoints, totalCredits, 3.00, 120);
+  const requiredForFirst = calculateRequiredGPA(totalPoints, totalCredits, 3.70, targetCredits);
+  const requiredForSecondUpper = calculateRequiredGPA(totalPoints, totalCredits, 3.30, targetCredits);
+  const requiredForSecondLower = calculateRequiredGPA(totalPoints, totalCredits, 3.00, targetCredits);
 
   const handlePrint = () => {
     if (!studentName || !studentId) {
@@ -106,7 +117,6 @@ export default function CalculatorPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 pb-12 pt-24 md:pt-28 text-slate-900 dark:text-slate-100 transition-colors duration-300">
       
-      {/* --- INJECT PRINT COMPONENT --- */}
       <PrintableReport 
         degreeName={DEGREES.find(d => d.id === selectedDegree)?.name || "Degree Program"}
         semesterData={semesterData}
@@ -121,10 +131,7 @@ export default function CalculatorPage() {
         }}
       />
 
-      {/* --- UI --- */}
       <div className="print:hidden">
-        
-        {/* Back to Home Button */}
         <div className="mb-8">
           <Link href="/" className="inline-flex items-center text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium text-sm bg-white dark:bg-slate-900 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md">
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -148,7 +155,6 @@ export default function CalculatorPage() {
           </button>
         </div>
 
-        {/* 1. DEGREE SELECTOR */}
         <div className="mb-6">
           <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">Select Degree</label>
           <select 
@@ -163,14 +169,113 @@ export default function CalculatorPage() {
           </select>
         </div>
 
-        {/* 2. PERSONAL DETAILS */}
+        {/* --- NEW DEGREE PROGRESS SECTION --- */}
+        {selectedDegree && (
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 mb-8 shadow-sm">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+              <div className="w-full md:w-1/3">
+                <div className="flex items-center gap-2 mb-2 text-slate-500 dark:text-slate-400">
+                  <BarChart className="w-4 h-4" />
+                  <h3 className="text-xs font-bold uppercase tracking-widest">Overall Degree Progress</h3>
+                </div>
+                <div className="flex items-end gap-2">
+                  <span className="text-4xl font-black text-slate-900 dark:text-white">{progressPercentage}%</span>
+                  <span className="text-sm text-slate-400 mb-1">of modules completed</span>
+                </div>
+              </div>
+              
+              <div className="w-full md:w-2/3">
+                <div className="flex justify-between text-xs font-bold text-slate-500 mb-2">
+                  <span>CURRICULUM COMPLETION</span>
+                  <span>{completedModules} / {totalPlannedModules} MODULES</span>
+                </div>
+                {/* Progress Bar Container */}
+                <div className="h-4 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-blue-600 transition-all duration-500 ease-out" 
+                    style={{ width: `${progressPercentage}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {selectedDegree && (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+            {/* CARD 1: Current Status */}
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-2 mb-2 text-blue-600 dark:text-blue-400">
+                <Award />
+                <h3 className="font-bold text-sm uppercase tracking-wide">Current Status</h3>
+              </div>
+              <div className="text-4xl font-black text-slate-900 dark:text-white mb-1">{gpaFinal}</div>
+              <div className="text-sm font-medium text-slate-500 dark:text-slate-400">{degreeClass}</div>
+            </div>
+
+            {/* NEW CARD 2: Credits Earned Progress */}
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-2 mb-2 text-indigo-600 dark:text-indigo-400">
+                <TrendingUp />
+                <h3 className="font-bold text-sm uppercase tracking-wide">Credits Earned</h3>
+              </div>
+              <div className="text-4xl font-black text-slate-900 dark:text-white mb-1">{totalCredits}</div>
+              <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full mt-2">
+                <div 
+                  className="h-full bg-indigo-500 rounded-full" 
+                  style={{ width: `${creditProgress}%` }}
+                />
+              </div>
+              <div className="text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-wider">Target: {targetCredits} Credits</div>
+            </div>
+
+            {/* CARD 3: Path to First Class */}
+            <div className={`p-6 rounded-2xl shadow-sm border ${requiredForFirst === "Impossible" ? "bg-red-50 dark:bg-red-950/30 border-red-100 dark:border-red-900/50" : "bg-emerald-50 dark:bg-emerald-950/30 border-emerald-100 dark:border-emerald-900/50"}`}>
+              <div className="flex items-center gap-2 mb-2 text-emerald-700 dark:text-emerald-400">
+                <TrendingUp />
+                <h3 className="font-bold text-sm uppercase tracking-wide">Path to First Class</h3>
+              </div>
+              {requiredForFirst === "Impossible" ? (
+                <>
+                  <div className="text-2xl font-bold text-red-600 dark:text-red-400 mb-1">Out of Reach</div>
+                  <p className="text-xs text-red-500 dark:text-red-400/70">Aim for Second Upper.</p>
+                </>
+              ) : requiredForFirst === "Secured" ? (
+                <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">🏆 Secured!</div>
+              ) : (
+                <>
+                  <div className="text-4xl font-black text-emerald-600 dark:text-emerald-400 mb-1">{requiredForFirst}</div>
+                  <p className="text-[10px] text-emerald-700 dark:text-emerald-400/80 font-bold uppercase tracking-wider">Required Avg.</p>
+                </>
+              )}
+            </div>
+
+            {/* CARD 4: Path to Second Upper */}
+            <div className="bg-blue-50 dark:bg-blue-950/30 p-6 rounded-2xl shadow-sm border border-blue-100 dark:border-blue-900/50">
+              <div className="flex items-center gap-2 mb-2 text-blue-700 dark:text-blue-400">
+                <TrendingUp />
+                <h3 className="font-bold text-sm uppercase tracking-wide">Path to Second Upper</h3>
+              </div>
+              {requiredForSecondUpper === "Impossible" ? (
+                 <div className="text-2xl font-bold text-slate-600 dark:text-slate-400">N/A</div>
+              ) : requiredForSecondUpper === "Secured" ? (
+                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">✅ Secured!</div>
+              ) : (
+                <>
+                  <div className="text-4xl font-black text-blue-600 dark:text-blue-400 mb-1">{requiredForSecondUpper}</div>
+                  <p className="text-[10px] text-blue-700 dark:text-blue-400/80 font-bold uppercase tracking-wider">Required Avg.</p>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* --- PERSONAL DETAILS (Condensed) --- */}
         {selectedDegree && (
           <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 mb-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-100 dark:bg-blue-900 rounded-full -mr-16 -mt-16 opacity-50 dark:opacity-20 blur-2xl"></div>
-            
             <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest mb-4 flex items-center gap-2">
               <User className="w-4 h-4 text-blue-500" />
-              Report Details <span className="text-[10px] bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full normal-case">Recommended</span>
+              Student Information
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
@@ -195,63 +300,6 @@ export default function CalculatorPage() {
                 onChange={(e) => setBatch(e.target.value)}
                 className="w-full p-3 pl-4 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600"
               />
-            </div>
-            <p className="text-xs text-slate-400 dark:text-slate-500 mt-3 ml-1">
-              * Enter these details if you want them to appear on your printed transcript.
-            </p>
-          </div>
-        )}
-
-        {/* 3. MAIN INSIGHTS GRID */}
-        {selectedDegree && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            {/* CARD 1: Current Status */}
-            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
-              <div className="flex items-center gap-2 mb-2 text-blue-600 dark:text-blue-400">
-                <Award />
-                <h3 className="font-bold text-sm uppercase tracking-wide">Current Status</h3>
-              </div>
-              <div className="text-4xl font-black text-slate-900 dark:text-white mb-1">{gpaFinal}</div>
-              <div className="text-sm font-medium text-slate-500 dark:text-slate-400">{degreeClass}</div>
-            </div>
-
-            {/* CARD 2: Path to First Class */}
-            <div className={`p-6 rounded-2xl shadow-sm border ${requiredForFirst === "Impossible" ? "bg-red-50 dark:bg-red-950/30 border-red-100 dark:border-red-900/50" : "bg-emerald-50 dark:bg-emerald-950/30 border-emerald-100 dark:border-emerald-900/50"}`}>
-              <div className="flex items-center gap-2 mb-2 text-emerald-700 dark:text-emerald-400">
-                <TrendingUp />
-                <h3 className="font-bold text-sm uppercase tracking-wide">Path to First Class (3.7+)</h3>
-              </div>
-              {requiredForFirst === "Impossible" ? (
-                <>
-                  <div className="text-2xl font-bold text-red-600 dark:text-red-400 mb-1">Out of Reach</div>
-                  <p className="text-xs text-red-500 dark:text-red-400/70">Don&apos;t worry! Aim for Second Upper.</p>
-                </>
-              ) : requiredForFirst === "Secured" ? (
-                <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">🏆 Secured!</div>
-              ) : (
-                <>
-                  <div className="text-4xl font-black text-emerald-600 dark:text-emerald-400 mb-1">{requiredForFirst}</div>
-                  <p className="text-xs text-emerald-700 dark:text-emerald-400/80 font-medium">Avg. GPA needed in remaining semesters</p>
-                </>
-              )}
-            </div>
-
-            {/* CARD 3: Path to Second Upper */}
-            <div className="bg-blue-50 dark:bg-blue-950/30 p-6 rounded-2xl shadow-sm border border-blue-100 dark:border-blue-900/50">
-              <div className="flex items-center gap-2 mb-2 text-blue-700 dark:text-blue-400">
-                <TrendingUp />
-                <h3 className="font-bold text-sm uppercase tracking-wide">Path to Second Upper (3.3+)</h3>
-              </div>
-              {requiredForSecondUpper === "Impossible" ? (
-                 <div className="text-2xl font-bold text-slate-600 dark:text-slate-400">Check Calculation</div>
-              ) : requiredForSecondUpper === "Secured" ? (
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">✅ Secured!</div>
-              ) : (
-                <>
-                  <div className="text-4xl font-black text-blue-600 dark:text-blue-400 mb-1">{requiredForSecondUpper}</div>
-                  <p className="text-xs text-blue-700 dark:text-blue-400/80 font-medium">Avg. GPA needed in remaining semesters</p>
-                </>
-              )}
             </div>
           </div>
         )}

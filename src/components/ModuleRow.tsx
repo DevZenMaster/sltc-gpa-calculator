@@ -1,67 +1,66 @@
-import { Module } from "@/types/module";
-import { GRADE_OPTIONS } from "@/data/gradePoints";
+"use client";
 
-interface Props {
+import React from "react";
+import { Trash2 } from "lucide-react";
+import { Module } from "@/types/module";
+
+interface ModuleRowProps {
   module: Module;
   onChange: (id: string, field: keyof Module, value: string | number) => void;
   onDelete: (id: string) => void;
 }
 
-export default function ModuleRow({ module, onChange, onDelete }: Props) {
+export default function ModuleRow({ module, onChange, onDelete }: ModuleRowProps) {
   return (
-    <div className="flex flex-col md:grid md:grid-cols-12 gap-3 items-start md:items-center bg-white p-4 rounded-lg shadow-sm border border-slate-200 mb-3 transition-all hover:shadow-md">
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors shadow-sm">
       
       {/* Module Name */}
-      <div className="w-full md:col-span-5">
-        <label className="block md:hidden text-xs font-bold text-slate-500 mb-1">MODULE NAME</label>
+      <div className="col-span-1 md:col-span-5">
+        <label className="block md:hidden text-[10px] font-bold text-slate-400 uppercase mb-1">Module Name</label>
         <input
           type="text"
-          placeholder="e.g. Programming Concepts"
           value={module.name}
           onChange={(e) => onChange(module.id, "name", e.target.value)}
-          className="w-full p-2 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 outline-none text-slate-800"
+          placeholder="Module Name"
+          className="w-full bg-transparent font-semibold text-slate-900 dark:text-white outline-none focus:text-blue-600 dark:focus:text-blue-400 transition-colors placeholder:text-slate-400 dark:placeholder:text-slate-600"
         />
-        {module.type === "Elective" && (
-          <span className="text-xs text-blue-600 font-semibold ml-1">Elective</span>
-        )}
       </div>
 
       {/* Credits */}
-      <div className="w-full md:col-span-3">
-        <label className="block md:hidden text-xs font-bold text-slate-500 mb-1">CREDITS</label>
+      <div className="col-span-1 md:col-span-3">
+        <label className="block md:hidden text-[10px] font-bold text-slate-400 uppercase mb-1">Credits</label>
         <input
           type="number"
-          min="0"
-          placeholder="Credits"
-          value={module.credits}
-          onChange={(e) => onChange(module.id, "credits", parseFloat(e.target.value) || 0)}
-          className="w-full p-2 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 outline-none text-slate-800"
+          value={module.credits || ""}
+          onChange={(e) => onChange(module.id, "credits", parseInt(e.target.value) || 0)}
+          className="w-full bg-transparent font-medium text-slate-700 dark:text-slate-300 outline-none"
         />
       </div>
 
-      {/* Grade Dropdown */}
-      <div className="w-full md:col-span-3">
-        <label className="block md:hidden text-xs font-bold text-slate-500 mb-1">GRADE</label>
+      {/* Grade Selector */}
+      <div className="col-span-1 md:col-span-3">
+        <label className="block md:hidden text-[10px] font-bold text-slate-400 uppercase mb-1">Grade</label>
         <select
           value={module.grade}
           onChange={(e) => onChange(module.id, "grade", e.target.value)}
-          className={`w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none ${module.grade === "" ? "border-red-300 bg-red-50 text-slate-500" : "border-slate-300 bg-white text-slate-800"}`}
+          className="w-full bg-transparent font-bold text-blue-600 dark:text-blue-400 outline-none cursor-pointer"
         >
-          <option value="">Select Grade...</option>
-          {GRADE_OPTIONS.map((g) => (
-            <option key={g} value={g}>{g}</option>
+          <option value="" className="dark:bg-slate-900">Grade</option>
+          {["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "E"].map((g) => (
+            <option key={g} value={g} className="dark:bg-slate-900 text-slate-900 dark:text-white">
+              {g}
+            </option>
           ))}
         </select>
       </div>
 
-      {/* Delete Button */}
-      <div className="w-full md:col-span-1 flex justify-end md:justify-center mt-2 md:mt-0">
+      {/* Delete Action */}
+      <div className="col-span-1 md:col-span-1 flex items-center justify-center">
         <button
           onClick={() => onDelete(module.id)}
-          className="text-red-400 hover:text-red-600 p-2 rounded-full hover:bg-red-50 transition"
-          title="Remove Module"
+          className="p-2 text-slate-300 dark:text-slate-600 hover:text-red-500 dark:hover:text-red-400 transition-colors"
         >
-          <span className="font-bold text-xl">&times;</span> 
+          <Trash2 size={18} />
         </button>
       </div>
     </div>
