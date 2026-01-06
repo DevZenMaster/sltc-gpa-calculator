@@ -1,54 +1,51 @@
-# SLTC GPA Calculator 🎓
+# SLTC GPA Intelligence Hub 🎓
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Site-2ea44f?style=for-the-badge&logo=vercel)](https://sltc-gpa-calculator.vercel.app)
+[![Live Deployment](https://img.shields.io/badge/Live_Engine-Visit_Now-3b82f6?style=for-the-badge&logo=vercel)](https://sltc-gpa-calculator.vercel.app)
 
-![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)
+![Next.js](https://img.shields.io/badge/Next.js-16.1.1-black?style=for-the-badge&logo=next.js)
+![React](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0-38B2AC?style=for-the-badge&logo=tailwind-css)
-![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css)
 
-The **unofficial** but definitive academic companion for the **Faculty of Computing & IT (Batch of 2028)** at Sri Lanka Technology Campus (SLTC).
+The **unofficial** definitive academic strategist and GPA intelligence engine for **Sri Lanka Technological Campus (SLTC)**. Designed for the Batch of 2028 and beyond.
 
 ---
 
-## ⚡ Features
+## ⚡ Intelligence Suite Features
 
-This isn't just a calculator; it's a full academic tracker.
+This platform transcends simple math, providing a high-precision academic roadmap for students.
 
-* **📚 Pre-loaded Curriculum:** Includes **all 8 semesters** of Core & Elective modules for:
-    * BSc Hons in Software Engineering
-    * BSc Hons in Cloud Computing
-    * BSc Hons in Cyber Security
-    * BSc Hons in Data Science
-    * Degree in Applied IT
-* **📊 Real-time Analytics:** Instantly calculates:
-    * Semester GPA
-    * Yearly GPA (Year 1, 2, 3, 4)
-    * Final Degree GPA
-* **🎯 Custom Electives:** Smart dropdowns filter electives based on your specific semester and degree.
-* **📱 100% Responsive:** Works perfectly on mobile phones, tablets, and desktops.
-* **🔒 Privacy First:** No database. No login. All calculations happen locally in your browser.
+* **📚 Pre-loaded Ecosystem:** Complete Core & Elective modules for all major faculties:
+    * **Computing & IT:** Software Engineering, Cloud, Cyber Security, Data Science, Applied IT.
+    * **Engineering:** Civil, Mechanical, Electronic, etc.
+    * **Business, Technology, Science & Music.**
+* **📊 Predictive Analytics:** * Real-time Semester GPA (SGPA) & Cumulative GPA (CGPA).
+    * **Strategic Roadmap:** Logic that tells you exactly what GPA you need to average in future semesters to hit "First Class" or "Second Upper."
+* **📄 Professional Reports:** Generate and download official-style academic statements and PDF transcripts instantly.
+* **🔒 Privacy-Centric Architecture:** Zero-server processing. Your grades are processed locally in your browser's runtime and never leave your device.
+* **📱 Ultra-Responsive UI:** Optimized for mobile-first interaction with Next.js 16/React 19 for zero-lag performance.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Framework:** [Next.js 14](https://nextjs.org/) (App Router)
-* **Language:** [TypeScript](https://www.typescriptlang.org/) (Strict typing)
-* **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+* **Framework:** [Next.js 16.1.1](https://nextjs.org/) (App Router & Turbopack)
+* **Library:** [React 19](https://react.dev/)
+* **Language:** [TypeScript](https://www.typescriptlang.org/)
+* **Styling:** [Tailwind CSS](https://tailwindcss.com/) (Glassmorphism & Custom Spectrum Glows)
 * **Icons:** [Lucide React](https://lucide.dev/)
 * **Deployment:** [Vercel](https://vercel.com/)
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Local Development
 
-Follow these steps to run the project locally on your machine.
+Initialize the intelligence engine on your local machine.
 
 ### Prerequisites
 
-* Node.js (v18 or higher)
-* npm or yarn
+* Node.js (v20 or higher recommended)
+* npm (v10 or higher)
 
 ### Installation
 
@@ -59,8 +56,9 @@ Follow these steps to run the project locally on your machine.
     ```
 
 2.  **Install dependencies**
+    *Note: Due to Next.js 16 peer dependencies, use the legacy flag if needed.*
     ```bash
-    npm install
+    npm install --legacy-peer-deps
     ```
 
 3.  **Run the development server**
@@ -68,50 +66,46 @@ Follow these steps to run the project locally on your machine.
     npm run dev
     ```
 
-4.  Open [http://localhost:3000](http://localhost:3000) in your browser.
+4.  Navigate to [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## 📖 How to Use
+## 📖 Operational Guide
 
-1.  **Select Degree:** Choose your program from the dropdown (e.g., Software Engineering).
-2.  **Select Semester:** Click on the tabs (1-8). Core modules will auto-load.
-3.  **Enter Grades:** Select your grade (A+, A, A-, etc.) for each module.
-4.  **Add Electives:** Use the dropdown at the bottom to add specific electives for that semester.
-5.  **View Results:** Check the "GPA Dashboard" at the top to see your cumulative progress.
+1.  **Select Faculty & Degree:** Choose your specific academic pathway.
+2.  **Initialize Semester:** Select tabs 1-8 to load pre-configured modules.
+3.  **Data Input:** Select grades from the dropdowns; the engine calculates totals in real-time.
+4.  **Analyze Forecast:** View the **Target GPA** cards to understand your required trajectory for Honors classifications.
+5.  **Export Statement:** Use the "Download Report" button to generate a PDF academic statement.
+
+
 
 ---
 
-## 📝 Data Source & Accuracy
+## 📝 Calculation Logic & Accuracy
 
-* **Source:** *SLTC Faculty of Computing and IT - Student Handbook (Batch of 2028)*.
-* **Grading Schema:** Based on **Table 18** of the handbook.
-    * `A+` = 4.0
-    * `A` = 4.0
+* **Protocol:** Strictly follows the *SLTC Student Handbook (Batch of 2028)*.
+* **Logic Engine:** Weighted average based on Credit values ($GPA = \sum(GP \times C) / \sum C$).
+* **Grading Matrix:**
+    * `A+` / `A` = 4.0
     * `A-` = 3.7
-    * `E (Weak)` = 0.7 (Specific to SLTC)
-    * `E` = 0.0
+    * `B+` = 3.3
+    * ...down to `E` = 0.0
 
-> **⚠️ Disclaimer:** This tool is for estimation purposes only. Always verify your official results with the SLTC Registrar's office.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! If you find a missing module or a calculation error:
-
-1.  Fork the Project
-2.  Create your Feature Branch (`git checkout -b feature/NewModule`)
-3.  Commit your Changes (`git commit -m 'Add missing elective'`)
-4.  Push to the Branch (`git push origin feature/NewModule`)
-5.  Open a Pull Request
+> **⚠️ Legal Disclaimer:** This is an unofficial tool. It is intended for estimation and strategic planning only. Final degree classifications are exclusively determined by the SLTC Registrar’s Office.
 
 ---
 
-## 📜 License
+## 🤝 Technical Contributions
 
-Distributed under the MIT License. See `LICENSE` for more information.
+We welcome optimizations to the logic engine or updates to faculty module data.
+
+1. Fork the Project.
+2. Create your Feature Branch (`git checkout -b feature/LogicUpdate`).
+3. Commit your Changes (`git commit -m 'Refactor GPA forecast algorithm'`).
+4. Push to the Branch (`git push origin feature/LogicUpdate`).
+5. Open a Pull Request.
 
 ---
 
-Made with ❤️ by **[DevZenMaster](https://github.com/DevZenMaster)** for the SLTC Community.
+Made with 💻 by **[Ruwan Sanjeewa](https://www.ruwansanjeewa.com)** (DevZenMaster) for the SLTC Academic Community.
