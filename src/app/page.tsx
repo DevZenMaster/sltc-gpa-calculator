@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, Printer, ShieldCheck, TrendingUp, Zap, Target, Award, Github, GitPullRequest, Code2, Briefcase, Cpu, DraftingCompass, Music, Clock } from "lucide-react";
+import Image from "next/image"; // Imported Image component
+import { ArrowRight, BookOpen, Printer, ShieldCheck, TrendingUp, Zap, Target, Award, Github, GitPullRequest, Code2, Briefcase, Cpu, DraftingCompass, Music, Clock, Terminal, Globe } from "lucide-react";
 
 export default function Home() {
   return (
@@ -52,8 +53,6 @@ export default function Home() {
              <span className="font-bold">Data Science</span>
              <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300"></span>
              <span className="font-bold">Cloud Computing</span>
-             <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300"></span>
-             <span className="font-bold">Information Technology</span>
           </div>
         </div>
       </section>
@@ -157,7 +156,7 @@ export default function Home() {
            </div>
            <h2 className="text-3xl font-bold text-slate-900 mb-8">Supported Programs</h2>
            <div className="flex flex-wrap justify-center gap-3">
-             {["BSc Hons Software Engineering", "BSc Hons Cloud Computing", "BSc Hons Cyber Security", "BSc Hons Data Science", "Bachelor of Information Technology"].map((degree) => (
+             {["BSc Hons Software Engineering", "BSc Hons Cloud Computing", "BSc Hons Cyber Security", "BSc Hons Data Science", "Degree in Applied IT"].map((degree) => (
                <span key={degree} className="px-5 py-3 rounded-xl bg-white border border-slate-200 text-slate-600 font-medium shadow-sm hover:border-blue-300 transition-colors">
                  {degree}
                </span>
@@ -166,7 +165,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- COMING SOON / ROADMAP (NEW) --- */}
+      {/* --- COMING SOON / ROADMAP --- */}
       <section className="py-16 px-6 bg-slate-50 border-t border-slate-200 border-dashed">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-4 mb-8">
@@ -197,11 +196,91 @@ export default function Home() {
         </div>
       </section>
 
+      {/* --- BEHIND THE CODE --- */}
+      <section className="py-24 px-6 bg-slate-50">
+        <div className="max-w-5xl mx-auto">
+          <div className="relative rounded-3xl overflow-hidden bg-slate-900 shadow-2xl group">
+            
+            {/* Background Decor Glows */}
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-600/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-indigo-600/20 rounded-full blur-[60px] translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+            
+            <div className="relative z-10 flex flex-col md:flex-row items-center gap-12 p-10 md:p-16">
+              
+              {/* Left Content */}
+              <div className="flex-1 text-center md:text-left space-y-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs font-bold uppercase tracking-widest">
+                  <Code2 className="w-3 h-3" />
+                  The Architect
+                </div>
+                
+                <h2 className="text-3xl md:text-4xl font-black text-white leading-tight">
+                  Crafted with Passion. <br />
+                  <span className="text-slate-400">Built for Students.</span>
+                </h2>
+                
+                <p className="text-slate-400 text-lg leading-relaxed max-w-md mx-auto md:mx-0">
+                  This isn&apos;t just a calculator. It&apos;s an open-source passion project designed to simplify academic life at SLTC. Meet the developer behind the logic.
+                </p>
+
+                <div className="pt-4">
+                  <Link 
+                    href="/developer" 
+                    className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/25 group/btn"
+                  >
+                    Meet Ruwan
+                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right Visual (Profile Card Widget) */}
+              <div className="w-full md:w-auto flex justify-center">
+                <div className="bg-slate-800/50 backdrop-blur-md border border-slate-700/50 p-6 rounded-2xl w-full max-w-[280px] transform hover:scale-105 transition-transform duration-500 shadow-xl">
+                   <div className="flex items-center gap-4 mb-6">
+                     {/* Avatar with Image */}
+                     <div className="w-16 h-16 relative">
+                       <Image
+                         src="/profile-pic.png"
+                         alt="Ruwan Sanjeewa"
+                         width={64}
+                         height={64}
+                         className="rounded-full object-cover shadow-lg border-2 border-slate-700"
+                       />
+                       {/* Online Status Dot */}
+                       <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-slate-800 z-10"></div>
+                     </div>
+                     <div>
+                       <h4 className="text-white font-bold text-lg leading-tight">Ruwan Sanjeewa</h4>
+                       <div className="text-blue-400 text-[10px] font-mono uppercase tracking-wider bg-blue-900/30 px-2 py-0.5 rounded inline-block mt-1">
+                         @DevZenMaster
+                       </div>
+                     </div>
+                   </div>
+                   
+                   <div className="space-y-2">
+                     <div className="flex items-center gap-3 text-xs font-medium text-slate-300 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/50">
+                       <Terminal className="w-4 h-4 text-slate-500" />
+                       <span>Full Stack Developer</span>
+                     </div>
+                     <div className="flex items-center gap-3 text-xs font-medium text-slate-300 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/50">
+                       <Globe className="w-4 h-4 text-emerald-500" />
+                       <span>Open Source Contributor</span>
+                     </div>
+                   </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* --- OPEN SOURCE / CONTRIBUTE --- */}
       <section className="py-24 px-6 bg-slate-900 text-white relative overflow-hidden">
         {/* Background Effects */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600 rounded-full blur-[150px] opacity-20 translate-x-1/3 -translate-y-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-600 rounded-full blur-[150px] opacity-20 -translate-x-1/3 translate-y-1/3"></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600 rounded-full blur-[150px] opacity-20 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-600 rounded-full blur-[150px] opacity-20 -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-900/50 border border-blue-700 text-blue-300 text-xs font-bold uppercase tracking-widest mb-6">
@@ -221,15 +300,6 @@ export default function Home() {
              This project is 100% open-source. Fork the repo, make your changes, and submit a PR to help your batchmates.
            </p>
 
-           {/* --- DEVELOPER CREDIT BADGE --- */}
-           <div className="mb-10 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 border border-slate-700 text-sm">
-              <Code2 className="w-4 h-4 text-blue-400" />
-              <span className="text-slate-400">Created & Maintained by</span>
-              <Link href="https://www.ruwansanjeewa.com" target="_blank" className="font-bold text-white hover:text-blue-400 transition-colors">
-                Ruwan Sanjeewa
-              </Link>
-           </div>
-           
            <div className="flex flex-col sm:flex-row justify-center gap-4">
              <Link 
                href="https://github.com/DevZenMaster/sltc-gpa-calculator" 
@@ -249,6 +319,7 @@ export default function Home() {
            </div>
         </div>
       </section>
+
     </div>
   );
 }
