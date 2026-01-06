@@ -17,9 +17,9 @@ export default function Home() {
 
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge emphasizing Unofficial Status */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 text-blue-700 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
-            <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-            Unofficial Academic Strategist • Batch 2028
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 text-red-700 dark:text-orange-400 text-xs font-bold uppercase tracking-widest mb-6">
+            <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+            Unofficial Academic Strategist • Based on SLTC Curriculum
           </div>
           
           <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white mb-6 leading-[1.1]">
