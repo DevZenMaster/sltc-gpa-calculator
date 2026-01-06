@@ -16,23 +16,42 @@ export default function Icon() {
     (
       <div
         style={{
-          fontSize: 100,
-          background: 'linear-gradient(to bottom right, #0f172a, #1e293b)', // Gradient Slate
+          background: '#030303',
           width: '100%',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          color: 'white',
-          borderRadius: '32px', // Apple style rounded corners
+          borderRadius: '44px', // Modern premium rounding
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          position: 'relative',
         }}
       >
-         {/* Large S Logo */}
-         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '110px' }}>
-            <span style={{ color: '#fff' }}>S</span>
-            <span style={{ color: '#3b82f6' }}>.</span>
-         </div>
+        {/* Subtle Glow Background */}
+        <div style={{
+          position: 'absolute',
+          width: '100px',
+          height: '100px',
+          background: 'rgba(59, 130, 246, 0.2)',
+          filter: 'blur(30px)',
+          borderRadius: '100%',
+        }} />
+
+        {/* Intelligence Hub Iconography */}
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          fontWeight: 900, 
+          fontSize: '110px',
+          fontStyle: 'italic',
+          letterSpacing: '-0.05em',
+          position: 'relative'
+        }}>
+          <span style={{ color: '#fff' }}>G</span>
+          <span style={{ color: '#3b82f6' }}>.</span>
+        </div>
       </div>
     ),
     {
