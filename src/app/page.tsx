@@ -1,30 +1,30 @@
 import Link from "next/link";
-import Image from "next/image"; // Imported Image component
+import Image from "next/image";
 import { ArrowRight, BookOpen, Printer, ShieldCheck, TrendingUp, Zap, Target, Award, Github, GitPullRequest, Code2, Briefcase, Cpu, DraftingCompass, Music, Clock, Terminal, Globe } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="bg-slate-50 text-slate-900 selection:bg-blue-100 selection:text-blue-900">
+    <div className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-blue-100 selection:text-blue-900 transition-colors duration-300">
       
       {/* --- HERO SECTION --- */}
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
         {/* Background Gradient Blob */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-200 rounded-full blur-[120px] opacity-20 -z-10"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-200 dark:bg-blue-900/20 rounded-full blur-[120px] opacity-20 -z-10"></div>
 
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-bold uppercase tracking-widest mb-6 animate-fade-in-up">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 text-blue-700 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-6 animate-fade-in-up">
             <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
             Updated for Batch of 2028
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 mb-6 leading-[1.1]">
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white mb-6 leading-[1.1]">
             Master Your Grades. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
               Plan Your Future.
             </span>
           </h1>
           
-          <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
             The unofficial academic strategist for SLTC Faculty of Computing & IT. Track your GPA, predict your degree class, and generate professional transcripts in seconds.
           </p>
           
@@ -38,66 +38,62 @@ export default function Home() {
             </Link>
             <Link 
               href="#features" 
-              className="px-8 py-4 bg-white text-slate-700 text-lg font-bold rounded-xl border border-slate-200 hover:bg-slate-50 transition-all"
+              className="px-8 py-4 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-lg font-bold rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
             >
               Learn More
             </Link>
           </div>
 
-          {/* Social Proof / Stats */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-4 md:gap-8 text-slate-400 grayscale opacity-70 text-sm md:text-base">
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-4 md:gap-8 text-slate-400 dark:text-slate-500 grayscale opacity-70 text-sm md:text-base">
              <span className="font-bold">Software Engineering</span>
-             <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300"></span>
+             <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700"></span>
              <span className="font-bold">Cyber Security</span>
-             <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300"></span>
+             <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700"></span>
              <span className="font-bold">Data Science</span>
-             <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300"></span>
+             <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700"></span>
              <span className="font-bold">Cloud Computing</span>
           </div>
         </div>
       </section>
 
       {/* --- BENTO GRID FEATURES --- */}
-      <section id="features" className="py-20 px-6 bg-white">
+      <section id="features" className="py-20 px-6 bg-white dark:bg-slate-950 transition-colors">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">Beyond Simple Math.</h2>
-            <p className="text-slate-500 max-w-xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-4">Beyond Simple Math.</h2>
+            <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
               We don&apos;t just add up numbers. We provide strategic insights to help you secure that First Class degree.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Feature 1: Strategic Roadmap (Large) */}
-            <div className="md:col-span-2 bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-blue-100 transition-colors relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500">
+            <div className="md:col-span-2 bg-slate-50 dark:bg-slate-900/50 rounded-3xl p-8 border border-slate-100 dark:border-slate-800 hover:border-blue-100 dark:hover:border-blue-900 transition-colors relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-8 opacity-10 dark:opacity-5 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500 text-slate-900 dark:text-white">
                 <Target size={200} />
               </div>
               <div className="relative z-10">
-                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6 text-blue-600">
+                <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center shadow-sm mb-6 text-blue-600 dark:text-blue-400">
                   <TrendingUp />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">Strategic Academic Roadmap</h3>
-                <p className="text-slate-500 max-w-md">
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Strategic Academic Roadmap</h3>
+                <p className="text-slate-500 dark:text-slate-400 max-w-md">
                   Our AI-driven logic analyzes your current standing and tells you exactly what GPA you need to average in remaining semesters to hit &quot;First Class&quot; or &quot;Second Upper&quot;.
                 </p>
                 
-                {/* Visual Mockup inside card */}
-                <div className="mt-8 bg-white rounded-xl border border-slate-200 p-4 shadow-sm max-w-sm">
+                <div className="mt-8 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 shadow-sm max-w-sm rounded-xl">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs font-bold uppercase text-slate-400">Target: First Class</span>
-                    <span className="text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full font-bold">High Effort</span>
+                    <span className="text-xs font-bold uppercase text-slate-400 dark:text-slate-500">Target: First Class</span>
+                    <span className="text-[10px] bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-2 py-0.5 rounded-full font-bold">High Effort</span>
                   </div>
                   <div className="flex items-end gap-2">
-                    <span className="text-3xl font-black text-slate-900">3.85</span>
-                    <span className="text-xs text-slate-400 mb-1">Avg. GPA Required</span>
+                    <span className="text-3xl font-black text-slate-900 dark:text-white">3.85</span>
+                    <span className="text-xs text-slate-400 dark:text-slate-500 mb-1">Avg. GPA Required</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Feature 2: PDF Reports */}
-            <div className="bg-slate-900 rounded-3xl p-8 text-white relative overflow-hidden group">
+            <div className="bg-slate-900 dark:bg-blue-950 rounded-3xl p-8 text-white relative overflow-hidden group">
               <div className="absolute -bottom-10 -right-10 bg-blue-600 w-40 h-40 rounded-full blur-[50px] opacity-50 group-hover:opacity-70 transition-opacity"></div>
               <div className="relative z-10">
                 <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center mb-6 text-white border border-white/10">
@@ -110,35 +106,32 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Feature 3: Privacy */}
-            <div className="bg-white rounded-3xl p-8 border border-slate-200 hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center mb-6 text-green-600">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all">
+              <div className="w-12 h-12 bg-green-50 dark:bg-green-900/20 rounded-2xl flex items-center justify-center mb-6 text-green-600 dark:text-green-400">
                 <ShieldCheck />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">100% Privacy Focused</h3>
-              <p className="text-slate-500 text-sm">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">100% Privacy Focused</h3>
+              <p className="text-slate-500 dark:text-slate-400 text-sm">
                 No login required. No database. Your grades are processed locally in your browser and never sent to a server.
               </p>
             </div>
 
-            {/* Feature 4: Curriculum */}
-            <div className="bg-white rounded-3xl p-8 border border-slate-200 hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 text-purple-600">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all">
+              <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/20 rounded-2xl flex items-center justify-center mb-6 text-purple-600 dark:text-purple-400">
                 <BookOpen />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Pre-loaded Curriculum</h3>
-              <p className="text-slate-500 text-sm">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Pre-loaded Curriculum</h3>
+              <p className="text-slate-500 dark:text-slate-400 text-sm">
                 Don&apos;t type manually. All Core and Elective modules for SE, CS, Data Science, and Cloud Computing are built-in.
               </p>
             </div>
 
-            {/* Feature 5: Real-time */}
-            <div className="bg-white rounded-3xl p-8 border border-slate-200 hover:shadow-lg transition-shadow md:col-span-1">
-              <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 text-orange-600">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all md:col-span-1">
+              <div className="w-12 h-12 bg-orange-50 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center mb-6 text-orange-600 dark:text-orange-400">
                 <Zap />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Lightning Fast</h3>
-              <p className="text-slate-500 text-sm">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Lightning Fast</h3>
+              <p className="text-slate-500 dark:text-slate-400 text-sm">
                 Built with Next.js 14. Instant interactions, zero lag, and mobile-optimized for calculating on the go.
               </p>
             </div>
@@ -147,17 +140,17 @@ export default function Home() {
       </section>
 
       {/* --- DEGREE LIST --- */}
-      <section className="py-20 px-6 border-t border-slate-200">
+      <section className="py-20 px-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
         <div className="max-w-4xl mx-auto text-center">
            <div className="mb-8 flex justify-center">
-             <div className="p-3 bg-blue-50 rounded-full text-blue-600">
+             <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-full text-blue-600 dark:text-blue-400">
                <Award size={32} />
              </div>
            </div>
-           <h2 className="text-3xl font-bold text-slate-900 mb-8">Supported Programs</h2>
+           <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-8">Supported Programs</h2>
            <div className="flex flex-wrap justify-center gap-3">
              {["BSc Hons Software Engineering", "BSc Hons Cloud Computing", "BSc Hons Cyber Security", "BSc Hons Data Science", "Degree in Applied IT"].map((degree) => (
-               <span key={degree} className="px-5 py-3 rounded-xl bg-white border border-slate-200 text-slate-600 font-medium shadow-sm hover:border-blue-300 transition-colors">
+               <span key={degree} className="px-5 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 font-medium shadow-sm hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
                  {degree}
                </span>
              ))}
@@ -165,14 +158,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- COMING SOON / ROADMAP --- */}
-      <section className="py-16 px-6 bg-slate-50 border-t border-slate-200 border-dashed">
+      {/* --- COMING SOON --- */}
+      <section className="py-16 px-6 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 border-dashed">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-4 mb-8">
-            <h3 className="text-xl font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+            <h3 className="text-xl font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest flex items-center gap-2">
               <Clock className="w-5 h-5" /> Coming Soon
             </h3>
-            <div className="h-px bg-slate-200 flex-grow"></div>
+            <div className="h-px bg-slate-200 dark:bg-slate-800 flex-grow"></div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -182,12 +175,12 @@ export default function Home() {
               { name: "Business School", icon: <Briefcase className="w-6 h-6" /> },
               { name: "School of Music", icon: <Music className="w-6 h-6" /> }
             ].map((faculty) => (
-              <div key={faculty.name} className="group p-6 rounded-2xl border-2 border-dashed border-slate-200 bg-white/50 hover:bg-white hover:border-slate-300 transition-all flex flex-col items-center text-center opacity-70 hover:opacity-100">
-                <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400 mb-3 group-hover:bg-slate-900 group-hover:text-white transition-colors">
+              <div key={faculty.name} className="group p-6 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col items-center text-center opacity-70 hover:opacity-100">
+                <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 dark:text-slate-500 mb-3 group-hover:bg-slate-900 dark:group-hover:bg-blue-600 group-hover:text-white transition-colors">
                   {faculty.icon}
                 </div>
-                <h4 className="font-bold text-slate-700 text-sm mb-2">{faculty.name}</h4>
-                <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
+                <h4 className="font-bold text-slate-700 dark:text-slate-300 text-sm mb-2">{faculty.name}</h4>
+                <span className="text-[10px] font-bold uppercase bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full">
                   In Development
                 </span>
               </div>
@@ -197,67 +190,44 @@ export default function Home() {
       </section>
 
       {/* --- BEHIND THE CODE --- */}
-      <section className="py-24 px-6 bg-slate-50">
+      <section className="py-24 px-6 bg-slate-50 dark:bg-slate-950">
         <div className="max-w-5xl mx-auto">
-          <div className="relative rounded-3xl overflow-hidden bg-slate-900 shadow-2xl group">
-            
-            {/* Background Decor Glows */}
+          <div className="relative rounded-3xl overflow-hidden bg-slate-900 dark:bg-slate-900/50 border border-slate-800 shadow-2xl group">
             <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-600/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-indigo-600/20 rounded-full blur-[60px] translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
             
             <div className="relative z-10 flex flex-col md:flex-row items-center gap-12 p-10 md:p-16">
-              
-              {/* Left Content */}
               <div className="flex-1 text-center md:text-left space-y-6">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs font-bold uppercase tracking-widest">
                   <Code2 className="w-3 h-3" />
                   The Architect
                 </div>
-                
                 <h2 className="text-3xl md:text-4xl font-black text-white leading-tight">
                   Crafted with Passion. <br />
                   <span className="text-slate-400">Built for Students.</span>
                 </h2>
-                
                 <p className="text-slate-400 text-lg leading-relaxed max-w-md mx-auto md:mx-0">
                   This isn&apos;t just a calculator. It&apos;s an open-source passion project designed to simplify academic life at SLTC. Meet the developer behind the logic.
                 </p>
-
                 <div className="pt-4">
-                  <Link 
-                    href="/developer" 
-                    className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/25 group/btn"
-                  >
-                    Meet Ruwan
-                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  <Link href="/developer" className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-500 transition-all shadow-lg group/btn">
+                    Meet Ruwan <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </div>
 
-              {/* Right Visual (Profile Card Widget) */}
               <div className="w-full md:w-auto flex justify-center">
                 <div className="bg-slate-800/50 backdrop-blur-md border border-slate-700/50 p-6 rounded-2xl w-full max-w-[280px] transform hover:scale-105 transition-transform duration-500 shadow-xl">
                    <div className="flex items-center gap-4 mb-6">
-                     {/* Avatar with Image */}
                      <div className="w-16 h-16 relative">
-                       <Image
-                         src="/profile-pic.png"
-                         alt="Ruwan Sanjeewa"
-                         width={64}
-                         height={64}
-                         className="rounded-full object-cover shadow-lg border-2 border-slate-700"
-                       />
-                       {/* Online Status Dot */}
+                       <Image src="/profile-pic.png" alt="Ruwan Sanjeewa" width={64} height={64} className="rounded-full object-cover shadow-lg border-2 border-slate-700" />
                        <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-slate-800 z-10"></div>
                      </div>
                      <div>
                        <h4 className="text-white font-bold text-lg leading-tight">Ruwan Sanjeewa</h4>
-                       <div className="text-blue-400 text-[10px] font-mono uppercase tracking-wider bg-blue-900/30 px-2 py-0.5 rounded inline-block mt-1">
-                         @DevZenMaster
-                       </div>
+                       <div className="text-blue-400 text-[10px] font-mono uppercase tracking-wider bg-blue-900/30 px-2 py-0.5 rounded inline-block mt-1">@DevZenMaster</div>
                      </div>
                    </div>
-                   
                    <div className="space-y-2">
                      <div className="flex items-center gap-3 text-xs font-medium text-slate-300 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/50">
                        <Terminal className="w-4 h-4 text-slate-500" />
@@ -270,56 +240,35 @@ export default function Home() {
                    </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
       </section>
 
-      {/* --- OPEN SOURCE / CONTRIBUTE --- */}
-      <section className="py-24 px-6 bg-slate-900 text-white relative overflow-hidden">
-        {/* Background Effects */}
+      {/* --- OPEN SOURCE SECTION --- */}
+      <section className="py-24 px-6 bg-slate-900 dark:bg-slate-950 text-white relative overflow-hidden transition-colors">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600 rounded-full blur-[150px] opacity-20 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-600 rounded-full blur-[150px] opacity-20 -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
-
         <div className="max-w-4xl mx-auto text-center relative z-10">
            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-900/50 border border-blue-700 text-blue-300 text-xs font-bold uppercase tracking-widest mb-6">
-              <GitPullRequest className="w-3 h-3" />
-              Contributions Welcome
+              <GitPullRequest className="w-3 h-3" /> Contributions Welcome
            </div>
-           
            <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">
              Built for Students.<br />
-             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">
-               Improved by You.
-             </span>
+             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Improved by You.</span>
            </h2>
-           
            <p className="text-slate-400 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
-             Found a calculation error? Want to add a new degree module? 
-             This project is 100% open-source. Fork the repo, make your changes, and submit a PR to help your batchmates.
+             Found a calculation error? Want to add a new degree module? This project is 100% open-source. Fork the repo and help your batchmates.
            </p>
-
            <div className="flex flex-col sm:flex-row justify-center gap-4">
-             <Link 
-               href="https://github.com/DevZenMaster/sltc-gpa-calculator" 
-               target="_blank"
-               className="px-8 py-4 bg-white text-slate-900 font-bold rounded-xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2"
-             >
-               <Github className="w-5 h-5" />
-               Star on GitHub
+             <Link href="https://github.com/DevZenMaster/sltc-gpa-calculator" target="_blank" className="px-8 py-4 bg-white text-slate-900 font-bold rounded-xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2">
+               <Github className="w-5 h-5" /> Star on GitHub
              </Link>
-             <Link 
-               href="https://github.com/DevZenMaster/sltc-gpa-calculator/issues" 
-               target="_blank"
-               className="px-8 py-4 bg-slate-800 text-white font-bold rounded-xl border border-slate-700 hover:bg-slate-700 transition-all flex items-center justify-center gap-2"
-             >
+             <Link href="https://github.com/DevZenMaster/sltc-gpa-calculator/issues" target="_blank" className="px-8 py-4 bg-slate-800 text-white font-bold rounded-xl border border-slate-700 hover:bg-slate-700 transition-all flex items-center justify-center gap-2">
                Report a Bug
              </Link>
            </div>
         </div>
       </section>
-
     </div>
   );
 }

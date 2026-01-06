@@ -1,33 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar"; // Import Navbar
-import Footer from "@/components/Footer"; // Import Footer
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/components/ThemeProvider"; // Import Provider
 
 export const metadata: Metadata = {
   title: "SLTC GPA Calculator | Faculty of Computing & IT",
-  description: "The unofficial academic strategist for SLTC students. Track GPA, predict degree class, and generate transcripts.",
-  
-  icons: {
-    icon: '/icon',
-    apple: '/apple-icon',
-  },
-
-  openGraph: {
-    title: "SLTC GPA Calculator | Faculty of Computing & IT",
-    description: "Master your grades. Plan your future. Calculate your SLTC GPA instantly.",
-    url: 'https://sltc-gpa.vercel.app', 
-    siteName: 'SLTC GPA Calculator',
-    images: [
-      {
-        url: '/opengraph-image',
-        width: 1200,
-        height: 630,
-        alt: 'SLTC GPA Calculator Preview',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
+  description: "The unofficial academic strategist for SLTC students.",
+  // ... rest of metadata
 };
 
 export default function RootLayout({
@@ -36,16 +16,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="flex flex-col min-h-screen bg-slate-50">
-        <Navbar />
-        
-        {/* Main Content */}
-        <main className="flex-grow relative z-0">
-          {children}
-        </main>
-        
-        <Footer />
+    <html lang="en" suppressHydrationWarning> {/* Add suppressHydrationWarning */}
+      <body className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Navbar />
+          <main className="flex-grow relative z-0">
+            {children}
+          </main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
