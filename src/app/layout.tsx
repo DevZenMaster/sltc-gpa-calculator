@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "SLTC GPA Calculator | Batch of 2028",
+  title: "SLTC GPA Calculator | Faculty of Computing & IT",
   description: "Calculate your semester GPA for Faculty of Computing & IT degrees.",
 };
 
