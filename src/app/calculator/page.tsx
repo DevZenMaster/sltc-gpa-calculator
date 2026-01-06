@@ -1,400 +1,306 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import ModuleRow from "@/components/ModuleRow";
 import PrintableReport from "@/components/PrintableReport"; 
-import { Module, DegreeModuleData, ModuleType } from "@/types/module";
+import { Module } from "@/types/module";
 import { calculateGPA, getDegreeClass, getTotalCreditsAndPoints, calculateRequiredGPA } from "@/utils/gpa";
-import { DEGREES } from "@/data/degrees";
-// Added BarChart for the progress icon
-import { Printer, TrendingUp, Award, User, ArrowLeft, BarChart } from "lucide-react"; 
 
-type DegreeState = {
-  [key: string]: Module[];
-};
+// Faculty Data Imports
+import { COMPUTING_DEGREES } from "@/data/ComputingFaculty/degree";
+import { ENGINEERING_DEGREES } from "@/data/EngineeringFaculty/degree";
+import { BUSINESS_DEGREES } from "@/data/BusinessFaculty/degree";
+import { TECHNOLOGY_DEGREES } from "@/data/TechnologyFaculty/degree";
+import { SCIENCE_DEGREES } from "@/data/ScienceFaculty/degree";
+import { MUSIC_DEGREES } from "@/data/MusicFaculty/degree";
+
+import { 
+  Printer, TrendingUp, Award, User, 
+  ArrowLeft, BarChart, BookOpen, Layers, Plus, Sparkles, Zap
+} from "lucide-react";
+
+const FACULTIES = [
+  { id: "computing", name: "Faculty of Computing & IT", degrees: COMPUTING_DEGREES },
+  { id: "engineering", name: "Faculty of Engineering", degrees: ENGINEERING_DEGREES },
+  { id: "business", name: "Faculty of Business Management", degrees: BUSINESS_DEGREES },
+  { id: "technology", name: "Faculty of Technology", degrees: TECHNOLOGY_DEGREES },
+  { id: "science", name: "Faculty of Science", degrees: SCIENCE_DEGREES },
+  { id: "music", name: "School of Music", degrees: MUSIC_DEGREES },
+];
+
+type DegreeState = { [key: string]: Module[] };
 
 export default function CalculatorPage() {
+  const [selectedFacultyId, setSelectedFacultyId] = useState("");
+  const [selectedDegreeId, setSelectedDegreeId] = useState("");
   const [semesterData, setSemesterData] = useState<DegreeState>({});
-  const [selectedDegree, setSelectedDegree] = useState("");
-  const [activeSemester, setActiveSemester] = useState("1"); 
-  const [availableElectives, setAvailableElectives] = useState<DegreeModuleData[]>([]);
-
+  const [activeSemester, setActiveSemester] = useState("1");
   const [studentName, setStudentName] = useState("");
   const [studentId, setStudentId] = useState("");
   const [batch, setBatch] = useState("");
 
+  const availableDegrees = useMemo(() => {
+    return FACULTIES.find(f => f.id === selectedFacultyId)?.degrees || [];
+  }, [selectedFacultyId]);
+
+  const handleFacultyChange = (id: string) => {
+    setSelectedFacultyId(id);
+    setSelectedDegreeId("");
+    setSemesterData({});
+  };
+
   const handleDegreeChange = (degreeId: string) => {
-    const degree = DEGREES.find((d) => d.id === degreeId);
+    const faculty = FACULTIES.find(f => f.id === selectedFacultyId);
+    const degree = faculty?.degrees.find(d => d.id === degreeId);
     if (!degree) return;
-    setSelectedDegree(degreeId);
-    
+
+    setSelectedDegreeId(degreeId);
     const newState: DegreeState = {};
+
     ["1", "2", "3", "4", "5", "6", "7", "8"].forEach((semId) => {
-      const semModules = degree.semesters[semId] || [];
-      newState[semId] = semModules
-        .filter((m) => m.type === "Core")
-        .map((m, index) => ({
-          id: `${degreeId}-${semId}-${index}`,
+      if (degree.semesters?.[semId]) {
+        newState[semId] = degree.semesters[semId].map((m: any, i: number) => ({
+          id: `${degreeId}-${semId}-${i}`,
           name: m.name,
           credits: m.credits,
-          grade: "", 
-          type: "Core",
+          grade: "",
+          type: m.type || "Core"
         }));
+      } else {
+        newState[semId] = [];
+      }
     });
     setSemesterData(newState);
     setActiveSemester("1");
-    updateElectivesList(degreeId, "1");
   };
 
-  const updateElectivesList = (degreeId: string, semId: string) => {
-    const degree = DEGREES.find((d) => d.id === degreeId);
-    if (!degree) return;
-    const semModules = degree.semesters[semId] || [];
-    setAvailableElectives(semModules.filter((m) => m.type === "Elective"));
-  };
-
-  const switchSemester = (semId: string) => {
-    setActiveSemester(semId);
-    if (selectedDegree) updateElectivesList(selectedDegree, semId);
-  };
-
-  const addModule = (name = "", credits = 0, type: ModuleType = "Core") => {
-    const newId = `${Date.now()}`;
-    const currentModules = semesterData[activeSemester] || [];
-    const updatedModules = [...currentModules, { id: newId, name, credits, grade: "", type }];
-    setSemesterData({ ...semesterData, [activeSemester]: updatedModules });
-  };
-
-  const handleModuleChange = (id: string, field: keyof Module, value: string | number) => {
-    const currentModules = semesterData[activeSemester] || [];
-    const updatedModules = currentModules.map((m) => m.id === id ? { ...m, [field]: value } : m);
-    setSemesterData({ ...semesterData, [activeSemester]: updatedModules });
-  };
-
-  const deleteModule = (id: string) => {
-    const currentModules = semesterData[activeSemester] || [];
-    setSemesterData({ ...semesterData, [activeSemester]: currentModules.filter((m) => m.id !== id) });
-  };
-
-  const getModulesForSemesters = (semesters: string[]) => {
-    let all: Module[] = [];
-    semesters.forEach(sem => { if (semesterData[sem]) all = [...all, ...semesterData[sem]]; });
-    return all;
-  };
-
-  const allModules = getModulesForSemesters(["1", "2", "3", "4", "5", "6", "7", "8"]);
+  const allModules = Object.values(semesterData).flat();
   const gpaFinal = calculateGPA(allModules);
   const activeSemGPA = calculateGPA(semesterData[activeSemester] || []);
-  
   const { totalPoints, totalCredits } = getTotalCreditsAndPoints(allModules);
   const degreeClass = getDegreeClass(gpaFinal);
 
-  // --- PROGRESS CALCULATIONS ---
-  // Count modules that have a grade entered
-  const completedModules = allModules.filter(m => m.grade !== "").length;
+  const targetCredits = 120; // Default SLTC Honor target
+  const completedModulesCount = allModules.filter(m => m.grade !== "").length;
   const totalPlannedModules = allModules.length;
-  const progressPercentage = totalPlannedModules > 0 
-    ? Math.round((completedModules / totalPlannedModules) * 100) 
-    : 0;
-
-  // Credits progress (Assuming 120 standard for SLTC)
-  const targetCredits = 120;
+  const degreeProgress = totalPlannedModules > 0 ? Math.round((completedModulesCount / totalPlannedModules) * 100) : 0;
   const creditProgress = Math.min(Math.round((totalCredits / targetCredits) * 100), 100);
-  
+
   const requiredForFirst = calculateRequiredGPA(totalPoints, totalCredits, 3.70, targetCredits);
   const requiredForSecondUpper = calculateRequiredGPA(totalPoints, totalCredits, 3.30, targetCredits);
-  const requiredForSecondLower = calculateRequiredGPA(totalPoints, totalCredits, 3.00, targetCredits);
 
-  const handlePrint = () => {
-    if (!studentName || !studentId) {
-      const confirmPrint = window.confirm("You haven't entered your Name or ID. The report looks best with these details. Do you want to print anyway?");
-      if (!confirmPrint) return;
-    }
-    window.print();
+  const addModule = () => {
+    const newId = Date.now().toString();
+    setSemesterData({
+      ...semesterData,
+      [activeSemester]: [...(semesterData[activeSemester] || []), { id: newId, name: "", credits: 0, grade: "", type: "Core" }]
+    });
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pb-12 pt-24 md:pt-28 text-slate-900 dark:text-slate-100 transition-colors duration-300">
-      
-      <PrintableReport 
-        degreeName={DEGREES.find(d => d.id === selectedDegree)?.name || "Degree Program"}
-        semesterData={semesterData}
-        finalGPA={gpaFinal}
-        studentName={studentName}
-        studentId={studentId}
-        batch={batch}
-        targets={{
-          first: requiredForFirst,
-          secondUpper: requiredForSecondUpper,
-          secondLower: requiredForSecondLower
-        }}
-      />
-
-      <div className="print:hidden">
-        <div className="mb-8">
-          <Link href="/" className="inline-flex items-center text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium text-sm bg-white dark:bg-slate-900 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
-          </Link>
-        </div>
+    <div className="min-h-screen bg-slate-50 dark:bg-[#030303] transition-colors duration-500">
+      <div className="max-w-7xl mx-auto px-6 pb-24 pt-32">
         
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-          <div>
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">GPA Dashboard</h1>
-            <p className="text-slate-500 dark:text-slate-400">Plan your path to a First Class.</p>
-          </div>
+        {/* Hidden on UI, visible on Print */}
+        <PrintableReport 
+          degreeName={availableDegrees.find(d => d.id === selectedDegreeId)?.name || "Degree"}
+          semesterData={semesterData} finalGPA={gpaFinal} studentName={studentName} studentId={studentId} batch={batch}
+          targets={{ first: requiredForFirst, secondUpper: requiredForSecondUpper, secondLower: "N/A" }}
+        />
+
+        <div className="print:hidden space-y-10">
           
-          <button 
-            onClick={handlePrint}
-            disabled={!selectedDegree}
-            className="flex items-center gap-2 bg-slate-900 dark:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-800 dark:hover:bg-blue-700 transition shadow-lg hover:shadow-xl hover:-translate-y-1 disabled:opacity-50 disabled:translate-y-0 disabled:shadow-none"
-          >
-            <Printer size={18} />
-            Download Report
-          </button>
-        </div>
-
-        <div className="mb-6">
-          <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">Select Degree</label>
-          <select 
-            value={selectedDegree}
-            onChange={(e) => handleDegreeChange(e.target.value)} 
-            className="w-full md:w-1/2 p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none text-lg font-medium text-slate-900 dark:text-white"
-          >
-            <option value="" disabled className="dark:bg-slate-900">Select your Degree Program...</option>
-            {DEGREES.map((d) => (
-              <option key={d.id} value={d.id} className="dark:bg-slate-900">{d.name}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* --- NEW DEGREE PROGRESS SECTION --- */}
-        {selectedDegree && (
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 mb-8 shadow-sm">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-              <div className="w-full md:w-1/3">
-                <div className="flex items-center gap-2 mb-2 text-slate-500 dark:text-slate-400">
-                  <BarChart className="w-4 h-4" />
-                  <h3 className="text-xs font-bold uppercase tracking-widest">Overall Degree Progress</h3>
-                </div>
-                <div className="flex items-end gap-2">
-                  <span className="text-4xl font-black text-slate-900 dark:text-white">{progressPercentage}%</span>
-                  <span className="text-sm text-slate-400 mb-1">of modules completed</span>
-                </div>
-              </div>
-              
-              <div className="w-full md:w-2/3">
-                <div className="flex justify-between text-xs font-bold text-slate-500 mb-2">
-                  <span>CURRICULUM COMPLETION</span>
-                  <span>{completedModules} / {totalPlannedModules} MODULES</span>
-                </div>
-                {/* Progress Bar Container */}
-                <div className="h-4 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-blue-600 transition-all duration-500 ease-out" 
-                    style={{ width: `${progressPercentage}%` }}
-                  />
-                </div>
+          {/* --- TOP NAV BAR --- */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div className="flex items-center gap-5">
+              <Link href="/" className="group p-3 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl hover:bg-blue-600 transition-all duration-300">
+                <ArrowLeft size={20} className="group-hover:text-white transition-colors" />
+              </Link>
+              <div>
+                <h1 className="text-4xl font-black tracking-tighter italic uppercase">Intelligence <span className="text-blue-600 font-black">Dashboard</span></h1>
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mt-1">Batch of 2028 • SLTC Research University</p>
               </div>
             </div>
+            <button 
+              onClick={() => window.print()} 
+              disabled={!selectedDegreeId} 
+              className="group flex items-center gap-3 bg-blue-600 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 disabled:opacity-30 transition-all shadow-xl shadow-blue-500/20 active:scale-95"
+            >
+              <Printer size={18} /> Download Academic Statement
+            </button>
           </div>
-        )}
 
-        {selectedDegree && (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-            {/* CARD 1: Current Status */}
-            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
-              <div className="flex items-center gap-2 mb-2 text-blue-600 dark:text-blue-400">
-                <Award />
-                <h3 className="font-bold text-sm uppercase tracking-wide">Current Status</h3>
-              </div>
-              <div className="text-4xl font-black text-slate-900 dark:text-white mb-1">{gpaFinal}</div>
-              <div className="text-sm font-medium text-slate-500 dark:text-slate-400">{degreeClass}</div>
-            </div>
-
-            {/* NEW CARD 2: Credits Earned Progress */}
-            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
-              <div className="flex items-center gap-2 mb-2 text-indigo-600 dark:text-indigo-400">
-                <TrendingUp />
-                <h3 className="font-bold text-sm uppercase tracking-wide">Credits Earned</h3>
-              </div>
-              <div className="text-4xl font-black text-slate-900 dark:text-white mb-1">{totalCredits}</div>
-              <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full mt-2">
-                <div 
-                  className="h-full bg-indigo-500 rounded-full" 
-                  style={{ width: `${creditProgress}%` }}
-                />
-              </div>
-              <div className="text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-wider">Target: {targetCredits} Credits</div>
-            </div>
-
-            {/* CARD 3: Path to First Class */}
-            <div className={`p-6 rounded-2xl shadow-sm border ${requiredForFirst === "Impossible" ? "bg-red-50 dark:bg-red-950/30 border-red-100 dark:border-red-900/50" : "bg-emerald-50 dark:bg-emerald-950/30 border-emerald-100 dark:border-emerald-900/50"}`}>
-              <div className="flex items-center gap-2 mb-2 text-emerald-700 dark:text-emerald-400">
-                <TrendingUp />
-                <h3 className="font-bold text-sm uppercase tracking-wide">Path to First Class</h3>
-              </div>
-              {requiredForFirst === "Impossible" ? (
-                <>
-                  <div className="text-2xl font-bold text-red-600 dark:text-red-400 mb-1">Out of Reach</div>
-                  <p className="text-xs text-red-500 dark:text-red-400/70">Aim for Second Upper.</p>
-                </>
-              ) : requiredForFirst === "Secured" ? (
-                <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">🏆 Secured!</div>
-              ) : (
-                <>
-                  <div className="text-4xl font-black text-emerald-600 dark:text-emerald-400 mb-1">{requiredForFirst}</div>
-                  <p className="text-[10px] text-emerald-700 dark:text-emerald-400/80 font-bold uppercase tracking-wider">Required Avg.</p>
-                </>
-              )}
-            </div>
-
-            {/* CARD 4: Path to Second Upper */}
-            <div className="bg-blue-50 dark:bg-blue-950/30 p-6 rounded-2xl shadow-sm border border-blue-100 dark:border-blue-900/50">
-              <div className="flex items-center gap-2 mb-2 text-blue-700 dark:text-blue-400">
-                <TrendingUp />
-                <h3 className="font-bold text-sm uppercase tracking-wide">Path to Second Upper</h3>
-              </div>
-              {requiredForSecondUpper === "Impossible" ? (
-                 <div className="text-2xl font-bold text-slate-600 dark:text-slate-400">N/A</div>
-              ) : requiredForSecondUpper === "Secured" ? (
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">✅ Secured!</div>
-              ) : (
-                <>
-                  <div className="text-4xl font-black text-blue-600 dark:text-blue-400 mb-1">{requiredForSecondUpper}</div>
-                  <p className="text-[10px] text-blue-700 dark:text-blue-400/80 font-bold uppercase tracking-wider">Required Avg.</p>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* --- PERSONAL DETAILS (Condensed) --- */}
-        {selectedDegree && (
-          <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 mb-8 relative overflow-hidden">
-            <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest mb-4 flex items-center gap-2">
-              <User className="w-4 h-4 text-blue-500" />
-              Student Information
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
-              <input 
-                type="text" 
-                placeholder="Student Name" 
-                value={studentName}
-                onChange={(e) => setStudentName(e.target.value)}
-                className="w-full p-3 pl-4 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600"
-              />
-              <input 
-                type="text" 
-                placeholder="Student ID" 
-                value={studentId}
-                onChange={(e) => setStudentId(e.target.value)}
-                className="w-full p-3 pl-4 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600"
-              />
-              <input 
-                type="text" 
-                placeholder="Batch (e.g. 2028)" 
-                value={batch}
-                onChange={(e) => setBatch(e.target.value)}
-                className="w-full p-3 pl-4 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600"
-              />
-            </div>
-          </div>
-        )}
-
-        {/* 4. SEMESTER TABS */}
-        <div className="flex overflow-x-auto pb-2 gap-2 mb-4 border-b border-slate-200 dark:border-slate-800">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((sem) => {
-            const s = sem.toString();
-            const isActive = activeSemester === s;
-            const hasData = semesterData[s]?.some(m => m.grade !== ""); 
-            
-            return (
-              <button
-                key={sem}
-                onClick={() => switchSemester(s)}
-                disabled={!selectedDegree}
-                className={`flex-shrink-0 px-6 py-2 rounded-t-lg font-bold text-sm transition-all relative ${
-                  isActive
-                    ? "bg-slate-800 dark:bg-blue-600 text-white"
-                    : "bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800"
-                }`}
+          {/* --- STEP 1: CONFIGURATION --- */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
+            <div className="lg:col-span-1 space-y-3">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2"><Layers size={14} className="text-blue-500"/> 01. Faculty Pathway</label>
+              <select 
+                value={selectedFacultyId} 
+                onChange={(e) => handleFacultyChange(e.target.value)} 
+                className="w-full p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 font-black text-xs uppercase tracking-widest outline-none focus:ring-2 focus:ring-blue-500 transition-all appearance-none"
               >
-                Semester {sem}
-                {hasData && !isActive && <span className="absolute top-2 right-2 w-2 h-2 bg-blue-500 rounded-full"></span>}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* 5. ACTIVE SEMESTER VIEW */}
-        <div className="bg-white dark:bg-slate-900 rounded-b-xl rounded-tr-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 min-h-[400px]">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold text-slate-700 dark:text-slate-300">Semester {activeSemester} Modules</h2>
-            <div className="text-right">
-              <span className="text-sm text-slate-400 dark:text-slate-500 uppercase font-bold mr-2">Sem. GPA:</span>
-              <span className="text-xl font-bold text-blue-600 dark:text-blue-400">{activeSemGPA}</span>
+                <option value="">Select Faculty...</option>
+                {FACULTIES.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+              </select>
+            </div>
+            <div className="lg:col-span-2 space-y-3">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2"><BookOpen size={14} className="text-blue-500"/> 02. Degree Specification</label>
+              <select 
+                disabled={!selectedFacultyId} 
+                value={selectedDegreeId} 
+                onChange={(e) => handleDegreeChange(e.target.value)} 
+                className="w-full p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 font-black text-xs uppercase tracking-widest outline-none disabled:opacity-20 transition-all appearance-none"
+              >
+                <option value="">{selectedFacultyId ? "Select Honours Degree..." : "Awaiting Faculty Selection..."}</option>
+                {availableDegrees.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+              </select>
             </div>
           </div>
 
-          {!selectedDegree ? (
-            <div className="text-center py-20 text-slate-400 dark:text-slate-600">
-              Please select a degree above to start.
+          {selectedDegreeId ? (
+            <div className="space-y-10 animate-in fade-in zoom-in-95 duration-500">
+              
+              {/* --- ANALYTICS SUITE --- */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                {/* Cumulative GPA Display */}
+                <div className="bg-white dark:bg-white/5 p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/10 shadow-sm relative overflow-hidden group">
+                   <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:scale-110 transition-transform"><Award size={80} /></div>
+                   <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-4">Cumulative GPA</p>
+                   <div className="text-5xl font-black tracking-tighter italic mb-2">{gpaFinal}</div>
+                   <div className="inline-flex px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-widest">{degreeClass}</div>
+                </div>
+
+                {/* Degree Progress */}
+                <div className="bg-white dark:bg-white/5 p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/10 shadow-sm">
+                   <p className="text-[10px] font-black text-indigo-600 uppercase tracking-widest mb-4">Degree Progress</p>
+                   <div className="text-5xl font-black tracking-tighter italic mb-4">{degreeProgress}%</div>
+                   <div className="h-2 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+                      <div className="h-full bg-indigo-500 transition-all duration-1000" style={{ width: `${degreeProgress}%` }} />
+                   </div>
+                   <p className="text-[8px] font-bold text-slate-400 uppercase mt-3 tracking-widest">{totalCredits} / {targetCredits} Credits Earned</p>
+                </div>
+
+                {/* Target Cards */}
+                <TargetAnalyticsCard label="First Class" target="3.70" value={requiredForFirst} />
+                <TargetAnalyticsCard label="Second Upper" target="3.30" value={requiredForSecondUpper} />
+              </div>
+
+              {/* --- STUDENT PROFILE --- */}
+              <div className="bg-white dark:bg-white/5 p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/10">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg"><User size={16} className="text-blue-600" /></div>
+                  <h3 className="text-xs font-black uppercase tracking-[0.3em]">Student Metadata</h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {['Name', 'ID', 'Batch'].map((field, idx) => (
+                    <div key={field} className="space-y-2">
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">{field}</label>
+                      <input 
+                        type="text" 
+                        placeholder={`Enter Student ${field}...`}
+                        value={field === 'Name' ? studentName : field === 'ID' ? studentId : batch}
+                        onChange={e => field === 'Name' ? setStudentName(e.target.value) : field === 'ID' ? setStudentId(e.target.value) : setBatch(e.target.value)}
+                        className="w-full p-4 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-black/20 outline-none focus:ring-2 focus:ring-blue-500 transition-all text-sm font-bold"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* --- SEMESTER ENGINE --- */}
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg text-orange-600"><Zap size={16} /></div>
+                    <h3 className="text-xs font-black uppercase tracking-[0.3em]">Semester Engine</h3>
+                  </div>
+                  <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 italic">Current SGPA: <span className="text-blue-600 text-sm ml-1">{activeSemGPA}</span></div>
+                </div>
+
+                <div className="flex overflow-x-auto pb-4 gap-3 no-scrollbar">
+                  {["1", "2", "3", "4", "5", "6", "7", "8"].map(s => (
+                    <button 
+                      key={s} 
+                      onClick={() => setActiveSemester(s)} 
+                      className={`px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all duration-300 border ${
+                        activeSemester === s 
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-xl shadow-blue-500/20' 
+                        : 'bg-white dark:bg-white/5 text-slate-400 border-slate-200 dark:border-white/10 hover:border-blue-500'
+                      }`}
+                    >
+                      Sem {s}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="bg-white dark:bg-white/5 rounded-[3rem] border border-slate-200 dark:border-white/10 p-10 shadow-2xl relative">
+                  <div className="absolute top-0 right-10 -translate-y-1/2 bg-blue-600 text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] shadow-xl">
+                    Semester {activeSemester} Intelligence
+                  </div>
+                  
+                  <div className="space-y-4">
+                    {semesterData[activeSemester]?.map(m => (
+                      <ModuleRow 
+                        key={m.id} 
+                        module={m} 
+                        onChange={(id, f, v) => {
+                          const updated = semesterData[activeSemester].map(mod => mod.id === id ? { ...mod, [f]: v } : mod);
+                          setSemesterData({ ...semesterData, [activeSemester]: updated });
+                        }} 
+                        onDelete={(id) => {
+                          const filtered = semesterData[activeSemester].filter(mod => mod.id !== id);
+                          setSemesterData({ ...semesterData, [activeSemester]: filtered });
+                        }}
+                      />
+                    ))}
+                    
+                    <button 
+                      onClick={addModule} 
+                      className="group w-full py-8 border-2 border-dashed border-slate-200 dark:border-white/10 rounded-[2rem] text-slate-400 hover:text-blue-600 hover:border-blue-600 transition-all flex flex-col items-center justify-center gap-2"
+                    >
+                      <Plus size={24} className="group-hover:rotate-90 transition-transform duration-500" />
+                      <span className="text-[10px] font-black uppercase tracking-[0.3em]">Deploy Custom Module</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           ) : (
-            <>
-              {/* Table Headers */}
-              <div className="hidden md:grid grid-cols-12 gap-3 px-4 mb-2 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                <div className="col-span-5">Module Name</div>
-                <div className="col-span-3">Credits</div>
-                <div className="col-span-3">Grade</div>
-                <div className="col-span-1 text-center">Action</div>
-              </div>
-
-              {/* Module List */}
-              <div className="space-y-3">
-                {(semesterData[activeSemester] || []).map((module) => (
-                  <ModuleRow
-                    key={module.id}
-                    module={module}
-                    onChange={handleModuleChange}
-                    onDelete={deleteModule}
-                  />
-                ))}
-              </div>
-
-              {/* Add Buttons */}
-              <div className="mt-8 flex flex-col md:flex-row gap-4">
-                <button 
-                  onClick={() => addModule()} 
-                  className="flex-1 py-3 px-4 bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 border-dashed"
-                >
-                  + Add Custom Module
-                </button>
-                {availableElectives.length > 0 && (
-                  <div className="flex-1 relative">
-                    <select
-                      className="w-full h-full py-3 px-4 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 rounded-lg border border-blue-200 dark:border-blue-900/50 outline-none"
-                      onChange={(e) => {
-                        const ele = availableElectives.find((m) => m.name === e.target.value);
-                        if (ele) { addModule(ele.name, ele.credits, "Elective"); e.target.value = ""; }
-                      }}
-                      defaultValue=""
-                    >
-                      <option value="" disabled className="dark:bg-slate-900">+ Add Elective</option>
-                      {availableElectives.map((e, i) => (
-                        <option key={i} value={e.name} className="dark:bg-slate-900">{e.name} ({e.credits} cr)</option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-              </div>
-            </>
+            /* --- EMPTY STATE --- */
+            <div className="py-40 flex flex-col items-center text-center space-y-6">
+               <div className="p-6 bg-blue-50 dark:bg-blue-900/10 rounded-full animate-bounce">
+                  <Sparkles className="text-blue-600" size={40} />
+               </div>
+               <div>
+                  <h2 className="text-2xl font-black uppercase italic tracking-tighter">System Ready for Input</h2>
+                  <p className="text-slate-500 text-sm font-medium">Please select your Faculty and Degree above to initialize the GPA Strategist.</p>
+               </div>
+            </div>
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+// --- SUB COMPONENTS ---
+
+function TargetAnalyticsCard({ label, target, value }: { label: string; target: string; value: string | number | null }) {
+  const isImpossible = value === "Impossible" || value === "N/A";
+  
+  return (
+    <div className={`p-8 rounded-[2.5rem] border transition-all duration-500 group ${
+      isImpossible 
+      ? 'bg-red-50 dark:bg-red-950/20 border-red-100 dark:border-red-900/30 grayscale' 
+      : 'bg-emerald-50 dark:bg-emerald-950/20 border-emerald-100 dark:border-emerald-900/30'
+    }`}>
+      <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-4">{label} ({target})</p>
+      <div className={`text-4xl font-black italic tracking-tighter ${isImpossible ? 'text-red-600' : 'text-emerald-600'}`}>
+        {value ?? "—"}
+      </div>
+      <p className="text-[8px] font-black uppercase tracking-widest opacity-40 mt-2">Required Semester Average</p>
     </div>
   );
 }

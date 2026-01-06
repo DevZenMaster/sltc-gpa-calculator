@@ -1,10 +1,14 @@
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, BookOpen, Printer, ShieldCheck, TrendingUp, Zap, Target, Award, Github, GitPullRequest, Code2, Briefcase, Cpu, DraftingCompass, Music, Clock, Terminal, Globe } from "lucide-react";
+import { 
+  ArrowRight, BookOpen, Printer, ShieldCheck, TrendingUp, Zap, Target, Award, Github, GitPullRequest, Code2, Briefcase, Cpu, DraftingCompass, Music, Clock, Terminal, Globe 
+} from "lucide-react";
 
 export default function Home() {
   return (
     <div className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-blue-100 selection:text-blue-900 transition-colors duration-300">
+      
       
       {/* --- HERO SECTION --- */}
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
@@ -12,50 +16,54 @@ export default function Home() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-200 dark:bg-blue-900/20 rounded-full blur-[120px] opacity-20 -z-10"></div>
 
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 text-blue-700 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-6 animate-fade-in-up">
+          {/* Badge emphasizing Unofficial Status */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 text-blue-700 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
             <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-            Updated for Batch of 2028
+            Unofficial Academic Strategist • Batch 2028
           </div>
           
           <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white mb-6 leading-[1.1]">
             Master Your Grades. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
-              Plan Your Future.
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 italic font-black">
+              Architect Your Future.
             </span>
           </h1>
           
-          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            The unofficial academic strategist for SLTC Faculty of Computing & IT. Track your GPA, predict your degree class, and generate professional transcripts in seconds.
+          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
+            The definitive <span className="text-slate-900 dark:text-white font-bold underline decoration-blue-500/30">unofficial</span> GPA Intelligence Engine for SLTC students. Forecast degree classes and generate professional academic statements with precision.
           </p>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-4">
             <Link 
               href="/calculator" 
-              className="group px-8 py-4 bg-blue-600 text-white text-lg font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/30 flex items-center gap-2"
+              className="group px-10 py-4 bg-blue-600 text-white text-lg font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/30 flex items-center gap-3 active:scale-95"
             >
-              Start Calculating
+              Launch GPA Intelligence
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link 
               href="#features" 
-              className="px-8 py-4 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-lg font-bold rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
+              className="px-10 py-4 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-lg font-bold rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all active:scale-95"
             >
               Learn More
             </Link>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-4 md:gap-8 text-slate-400 dark:text-slate-500 grayscale opacity-70 text-sm md:text-base">
-             <span className="font-bold">Software Engineering</span>
+          {/* Grayscale Faculty List */}
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-4 md:gap-8 text-slate-400 dark:text-slate-500 grayscale opacity-70 text-[10px] md:text-xs font-black uppercase tracking-[0.2em]">
+             <span className="hover:text-blue-600 transition-colors cursor-default">Engineering</span>
              <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700"></span>
-             <span className="font-bold">Cyber Security</span>
+             <span className="hover:text-blue-600 transition-colors cursor-default">Computing</span>
              <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700"></span>
-             <span className="font-bold">Data Science</span>
+             <span className="hover:text-blue-600 transition-colors cursor-default">Technology</span>
              <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700"></span>
-             <span className="font-bold">Cloud Computing</span>
+             <span className="hover:text-blue-600 transition-colors cursor-default">Business</span>
+             <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700"></span>
+             <span className="hover:text-blue-600 transition-colors cursor-default">Science</span>
           </div>
         </div>
       </section>
-
+      
       {/* --- BENTO GRID FEATURES --- */}
       <section id="features" className="py-20 px-6 bg-white dark:bg-slate-950 transition-colors">
         <div className="max-w-6xl mx-auto">
@@ -125,71 +133,50 @@ export default function Home() {
                 Don&apos;t type manually. All Core and Elective modules for SE, CS, Data Science, and Cloud Computing are built-in.
               </p>
             </div>
-
-            <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all md:col-span-1">
-              <div className="w-12 h-12 bg-orange-50 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center mb-6 text-orange-600 dark:text-orange-400">
-                <Zap />
+            <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 bg-orange-50 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center mb-6 text-orange-600 shadow-sm">
+                <Zap className="fill-orange-600/10" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Lightning Fast</h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm">
-                Built with Next.js 14. Instant interactions, zero lag, and mobile-optimized for calculating on the go.
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 uppercase tracking-tighter italic">Ultra-Responsive</h3>
+              <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                Powered by <strong className="text-orange-600 font-black">Next.js 16.1.1</strong>. Optimized with React 19 for instant interactions, zero lag, and a seamless mobile-first experience.
               </p>
             </div>
           </div>
         </div>
-      </section>
+      </section>    
 
-      {/* --- DEGREE LIST --- */}
-      <section className="py-20 px-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
-        <div className="max-w-4xl mx-auto text-center">
-           <div className="mb-8 flex justify-center">
-             <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-full text-blue-600 dark:text-blue-400">
-               <Award size={32} />
-             </div>
-           </div>
-           <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-8">Supported Programs</h2>
-           <div className="flex flex-wrap justify-center gap-3">
-             {["BSc Hons Software Engineering", "BSc Hons Cloud Computing", "BSc Hons Cyber Security", "BSc Hons Data Science", "Degree in Applied IT"].map((degree) => (
-               <span key={degree} className="px-5 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 font-medium shadow-sm hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
-                 {degree}
-               </span>
-             ))}
-           </div>
+
+      {/* --- FACULTY SECTION --- */}
+      <section className="py-16 px-6 bg-white dark:bg-[#030303] border-y border-slate-100 dark:border-white/5 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-40">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-rose-500/10 blur-[120px] rounded-full" />
         </div>
-      </section>
 
-      {/* --- COMING SOON --- */}
-      <section className="py-16 px-6 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 border-dashed">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex items-center gap-4 mb-8">
-            <h3 className="text-xl font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest flex items-center gap-2">
-              <Clock className="w-5 h-5" /> Coming Soon
-            </h3>
-            <div className="h-px bg-slate-200 dark:bg-slate-800 flex-grow"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-12"> {/* Reduced mb-16 to mb-12 for tighter spacing */}
+            <h2 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white mb-3 tracking-tighter uppercase italic leading-tight">
+              Unified Academic <span className="text-blue-600">Intelligence.</span>
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto font-medium text-sm italic leading-relaxed">
+              Strategic GPA tracking optimized for every honours path across the university.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { name: "Faculty of Engineering", icon: <DraftingCompass className="w-6 h-6" /> },
-              { name: "Faculty of Technology", icon: <Cpu className="w-6 h-6" /> },
-              { name: "Business School", icon: <Briefcase className="w-6 h-6" /> },
-              { name: "School of Music", icon: <Music className="w-6 h-6" /> }
-            ].map((faculty) => (
-              <div key={faculty.name} className="group p-6 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col items-center text-center opacity-70 hover:opacity-100">
-                <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 dark:text-slate-500 mb-3 group-hover:bg-slate-900 dark:group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                  {faculty.icon}
-                </div>
-                <h4 className="font-bold text-slate-700 dark:text-slate-300 text-sm mb-2">{faculty.name}</h4>
-                <span className="text-[10px] font-bold uppercase bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full">
-                  In Development
-                </span>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <FacultySpectrumCard title="Engineering" icon={<DraftingCompass />} theme="blue" desc="Civil, Mechanical, and Electronic disciplines." />
+            <FacultySpectrumCard title="Computing & IT" icon={<Cpu />} theme="indigo" desc="SE, Cybersecurity, Data Science, and Cloud." />
+            <FacultySpectrumCard title="Business" icon={<Briefcase />} theme="emerald" desc="HRM, Marketing, and Accounting tracks." />
+            <FacultySpectrumCard title="Technology" icon={<Cpu />} theme="orange" desc="Agricultural, Environmental, and B.Tech." />
+            <FacultySpectrumCard title="Science" icon={<BookOpen />} theme="rose" desc="Textile, Fashion, and Biosystems Engineering." />
+            <FacultySpectrumCard title="School of Music" icon={<Music />} theme="violet" desc="Professional degree pathways in Music." />
           </div>
         </div>
       </section>
 
-      {/* --- BEHIND THE CODE --- */}
+
+     {/* --- BEHIND THE CODE --- */}
       <section className="py-24 px-6 bg-slate-50 dark:bg-slate-950">
         <div className="max-w-5xl mx-auto">
           <div className="relative rounded-3xl overflow-hidden bg-slate-900 dark:bg-slate-900/50 border border-slate-800 shadow-2xl group">
@@ -211,7 +198,7 @@ export default function Home() {
                 </p>
                 <div className="pt-4">
                   <Link href="/developer" className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-500 transition-all shadow-lg group/btn">
-                    Meet Ruwan <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                    Meet DevZenMaster <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </div>
@@ -269,6 +256,43 @@ export default function Home() {
            </div>
         </div>
       </section>
+    </div>
+  );
+}
+  
+
+// --- FACULTY CARD COMPONENT ---
+function FacultySpectrumCard({ title, icon, desc, theme }: { title: string; icon: React.ReactNode; desc: string; theme: string }) {
+  const themes: { [key: string]: any } = {
+    blue: { bg: "hover:bg-blue-50/50 dark:hover:bg-blue-900/10", border: "hover:border-blue-500/50", icon: "text-blue-600", shadow: "hover:shadow-blue-500/20", bar: "bg-blue-500" },
+    indigo: { bg: "hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10", border: "hover:border-indigo-500/50", icon: "text-indigo-600", shadow: "hover:shadow-indigo-500/20", bar: "bg-indigo-500" },
+    emerald: { bg: "hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10", border: "hover:border-emerald-500/50", icon: "text-emerald-600", shadow: "hover:shadow-emerald-500/20", bar: "bg-emerald-500" },
+    orange: { bg: "hover:bg-orange-50/50 dark:hover:bg-orange-900/10", border: "hover:border-orange-500/50", icon: "text-orange-600", shadow: "hover:shadow-orange-500/20", bar: "bg-orange-500" },
+    rose: { bg: "hover:bg-rose-50/50 dark:hover:bg-rose-900/10", border: "hover:border-rose-500/50", icon: "text-rose-600", shadow: "hover:shadow-rose-500/20", bar: "bg-rose-500" },
+    violet: { bg: "hover:bg-violet-50/50 dark:hover:bg-violet-900/10", border: "hover:border-violet-500/50", icon: "text-violet-600", shadow: "hover:shadow-violet-500/20", bar: "bg-violet-500" },
+  };
+
+  const active = themes[theme] || themes.blue;
+
+  return (
+    <div className={`group p-6 rounded-2xl bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all duration-500 hover:-translate-y-2 ${active.bg} ${active.border} ${active.shadow} shadow-xl shadow-slate-200/50 dark:shadow-none`}>
+      
+      <div className={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 bg-slate-50 dark:bg-white/5 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 ${active.icon}`}>
+        {React.cloneElement(icon as React.ReactElement, { size: 24 })}
+      </div>
+      
+      <h3 className="text-2xl font-black mb-2 uppercase tracking-tight leading-snug transition-all duration-500 text-slate-900 dark:text-white group-hover:text-blue-600">
+        {title}
+      </h3>
+      
+      <p className="text-slate-500 dark:text-slate-400 text-xs font-medium leading-snug mb-6">
+        {desc}
+      </p>
+      
+      <div className="flex items-center gap-3">
+        <div className={`h-1 w-10 rounded-full transition-all duration-700 group-hover:w-full ${active.bar}`} />
+        <ArrowRight size={16} className={`opacity-0 -translate-x-3 transition-all duration-500 group-hover:opacity-100 group-hover:translate-x-0 ${active.icon}`} />
+      </div>
     </div>
   );
 }

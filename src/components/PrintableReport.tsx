@@ -1,7 +1,12 @@
+"use client";
+
 import React from "react";
 import { Module } from "@/types/module";
 import { getDegreeClass } from "@/utils/gpa";
-import { Trophy, Medal, Star, AlertTriangle, CheckCircle2, Flame, Target, Zap, ShieldCheck, TrendingUp } from "lucide-react";
+import { 
+  Trophy, Medal, Star, AlertTriangle, CheckCircle2, 
+  Flame, Target, Zap, ShieldCheck, TrendingUp 
+} from "lucide-react";
 
 interface Props {
   degreeName: string;
@@ -26,71 +31,52 @@ export default function PrintableReport({
   batch,
   targets
 }: Props) {
-  const date = new Date().toLocaleDateString();
+  const date = new Date().toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
 
-  // --- NEXT-LEVEL DYNAMIC FEEDBACK LOGIC ---
   const getFeedback = (reqGPA: string | null) => {
-    // 1. CASE: IMPOSSIBLE
     if (reqGPA === "Impossible") {
       return {
         style: "bg-slate-50 border-slate-200 text-slate-500",
         icon: <AlertTriangle className="w-5 h-5 text-slate-400" />,
-        status: "Statistically Out of Reach",
-        msg: "Current projections indicate this tier is mathematically unattainable. Immediate Strategy: Lock in the next highest classification with absolute certainty."
+        status: "Mathematically Out of Reach",
+        msg: "Current projections indicate this tier is unattainable. Focus on securing the next highest classification with absolute certainty."
       };
     }
 
-    // 2. CASE: SECURED
     if (reqGPA === "Secured") {
       return {
-        style: "bg-emerald-50 border-emerald-200 text-emerald-800 shadow-emerald-100",
+        style: "bg-emerald-50 border-emerald-200 text-emerald-800",
         icon: <CheckCircle2 className="w-5 h-5 text-emerald-600" />,
-        status: "Distinction Secured",
-        msg: "You have statistically cemented this classification. Your New Goal: Build a transcript of excellence that impresses employers beyond just the final number."
+        status: "Classification Secured",
+        msg: "You have cemented this status. Continue maintaining this standard to graduate with professional distinction."
       };
     }
     
-    // 3. NUMERIC ANALYSIS
     const val = parseFloat(reqGPA || "0");
     
-    // Tier 1: Near Impossible (> 3.90)
-    if (val >= 3.90) return {
+    if (val >= 3.80) return {
       style: "bg-red-50 border-red-200 text-red-900",
       icon: <Flame className="w-5 h-5 text-red-600" />,
-      status: "Visionary Effort",
-      msg: "Requires a flawless run of 'A+' grades. This is 'top 1%' territory. Every single assignment point is now mission-critical. Zero margin for error."
+      status: "Visionary Effort Required",
+      msg: "Requires a near-flawless 'A+' average. Mission-critical focus is needed for every credit point. Zero margin for error."
     };
 
-    // Tier 2: Extremely Hard (3.75 - 3.89)
-    if (val >= 3.75) return {
+    if (val >= 3.65) return {
       style: "bg-orange-50 border-orange-200 text-orange-900",
       icon: <Zap className="w-5 h-5 text-orange-600" />,
-      status: "Relentless Precision",
-      msg: "Demands a pure 'A' average. There is no room for 'B' grades. You must master every module, prioritizing high-credit courses above all else."
+      status: "High Precision Mode",
+      msg: "Demands a consistent 'A' average. Prioritize high-credit modules and eliminate any potential for 'C' grades."
     };
 
-    // Tier 3: Hard (3.50 - 3.74)
-    if (val >= 3.50) return {
-      style: "bg-amber-50 border-amber-200 text-amber-900",
-      icon: <Target className="w-5 h-5 text-amber-600" />,
-      status: "High-Performance Zone",
-      msg: "You need a consistent 'A-' standard. Strategic sacrifice of leisure time may be required during exam seasons. Rigorous discipline is non-negotiable."
-    };
-
-    // Tier 4: Moderate (3.25 - 3.49)
-    if (val >= 3.25) return {
-      style: "bg-blue-50 border-blue-200 text-blue-900",
-      icon: <TrendingUp className="w-5 h-5 text-blue-600" />,
-      status: "Disciplined Focus",
-      msg: "A mix of 'B+' and 'A-' is your baseline. One slip into 'C' territory could jeopardize this target. Stay vigilant and track every quiz result."
-    };
-
-    // Tier 5: Easy (< 3.25)
     return {
-      style: "bg-indigo-50 border-indigo-200 text-indigo-900",
-      icon: <ShieldCheck className="w-5 h-5 text-indigo-600" />,
-      status: "Strategic Advantage",
-      msg: "You hold a commanding lead. Maintain a consistent 'B+' standard to cruise to the finish line. Avoid complacency; finish with professional pride."
+      style: "bg-blue-50 border-blue-200 text-blue-900",
+      icon: <ShieldCheck className="w-5 h-5 text-blue-600" />,
+      status: "Strategic Lead",
+      msg: "You hold a commanding position. Maintain a disciplined 'B+' to 'A-' average to finish with professional pride."
     };
   };
 
@@ -100,41 +86,25 @@ export default function PrintableReport({
 
     return (
       <div className={`p-5 rounded-xl border ${info.style} relative overflow-hidden flex flex-col justify-between shadow-sm`}>
-        {/* Background Icon Watermark */}
-        <div className="absolute -right-4 -bottom-4 opacity-[0.08] scale-[2.5]">
+        <div className="absolute -right-4 -bottom-4 opacity-[0.05] scale-[2.5]">
           <BadgeIcon size={60} />
         </div>
-
         <div className="relative z-10">
-          <div className="flex justify-between items-start mb-3">
-            <div className="flex items-center gap-2">
-               <div className="p-1.5 bg-white/60 rounded-lg backdrop-blur-sm shadow-sm">{info.icon}</div>
-               <h4 className="font-bold text-xs uppercase tracking-widest">{title}</h4>
-            </div>
+          <div className="flex items-center gap-2 mb-3">
+             <div className="p-1 bg-white/80 rounded shadow-sm">{info.icon}</div>
+             <h4 className="font-bold text-[10px] uppercase tracking-widest">{title}</h4>
           </div>
-
-          <div className="mb-3 pl-1">
+          <div className="mb-3">
              {isScore ? (
-               <div>
-                 <div className="text-[10px] font-bold uppercase opacity-60 mb-0.5">Required Avg.</div>
-                 <div className="text-3xl font-black tracking-tighter leading-none">{reqGPA}</div>
-               </div>
+               <div className="text-3xl font-black tracking-tighter">{reqGPA}</div>
              ) : (
-               <div>
-                 <div className="text-[10px] font-bold uppercase opacity-60 mb-0.5">Status</div>
-                 <div className="text-xl font-black tracking-tight leading-none uppercase">{reqGPA === "Secured" ? "Locked 🔒" : "Missed"}</div>
-               </div>
+               <div className="text-xl font-black uppercase tracking-tight">{reqGPA === "Secured" ? "Locked 🔒" : "Missed"}</div>
              )}
+             <div className="text-[8px] font-bold uppercase opacity-60 tracking-widest">{isScore ? "Req. Avg GPA" : "Current Status"}</div>
           </div>
-          
-          <div className="mt-2 pt-2 border-t border-black/10">
-            <div className="flex items-center gap-2 mb-1">
-               <span className="w-1.5 h-1.5 rounded-full bg-current opacity-50"></span>
-               <span className="text-[9px] font-bold uppercase opacity-80">{info.status}</span>
-            </div>
-            <p className="text-[10px] font-medium leading-relaxed opacity-90 italic">
-              &quot;{info.msg}&quot;
-            </p>
+          <div className="mt-2 pt-2 border-t border-black/5">
+            <p className="text-[9px] font-bold uppercase mb-1 opacity-70">{info.status}</p>
+            <p className="text-[10px] leading-tight italic opacity-80">&quot;{info.msg}&quot;</p>
           </div>
         </div>
       </div>
@@ -142,151 +112,117 @@ export default function PrintableReport({
   };
 
   return (
-    <div className="hidden print:block absolute top-0 left-0 w-full bg-white text-slate-900 p-8 z-50">
-      
-      {/* OUTER FRAME - Dynamic Height */}
-      <div className="w-full h-auto border-4 border-double border-slate-300 p-8 relative">
+    <div className="hidden print:block bg-white text-slate-900 p-0 font-sans leading-tight">
+      <div className="w-full h-auto border-[12px] border-slate-100 p-10 relative min-h-screen flex flex-col">
         
-        {/* WATERMARK */}
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none z-0">
-           <h1 className="text-[200px] font-black tracking-tighter text-slate-900 -rotate-45">SLTC</h1>
+        {/* BACKGROUND WATERMARK */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] rotate-[-35deg] pointer-events-none">
+           <h1 className="text-[250px] font-black tracking-tighter">SLTC</h1>
         </div>
 
-        <div className="relative z-10 flex flex-col">
-          
-          {/* --- HEADER --- */}
-          <div className="flex justify-between items-end border-b-2 border-slate-900 pb-6 mb-8">
-            <div>
-              <h1 className="text-3xl font-serif font-black text-slate-900 tracking-wide uppercase">
-                SLTC Research University
-              </h1>
-              <p className="text-xs text-slate-500 uppercase tracking-[0.3em] mt-2 font-bold ml-1">
-                Faculty of Computing & IT <span className="text-slate-300">|</span> BAIT
-              </p>
-            </div>
-            <div className="text-right">
-              <div className="bg-slate-900 text-white px-4 py-1.5 text-xs font-bold uppercase tracking-widest inline-block mb-2 rounded-sm">
-                Generated Report
-              </div>
-              <p className="text-xs font-mono text-slate-500">{date}</p>
-            </div>
+        {/* --- HEADER --- */}
+        <div className="flex justify-between items-end border-b-4 border-slate-900 pb-8 mb-10 relative z-10">
+          <div>
+            <h1 className="text-4xl font-serif font-black tracking-tight text-slate-900 uppercase leading-none">
+              SLTC Research University
+            </h1>
+            <p className="text-xs font-black text-slate-500 uppercase tracking-[0.4em] mt-3">
+              Academic Affairs Division <span className="mx-2 text-slate-300">|</span> BAIT Intelligence Hub
+            </p>
           </div>
-
-          {/* --- STUDENT DETAILS --- */}
-          <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-10 shadow-sm">
-            <div className="grid grid-cols-2 gap-8">
-              <div className="space-y-4">
-                <div>
-                  <p className="text-[10px] font-bold uppercase text-slate-400 tracking-widest mb-1">Student Name</p>
-                  <p className="font-serif font-bold text-xl text-slate-900">{studentName || "_______________________"}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold uppercase text-slate-400 tracking-widest mb-1">Student ID</p>
-                  <p className="font-mono text-lg text-slate-700">{studentId || "_______________________"}</p>
-                </div>
-              </div>
-              <div className="space-y-4 text-right">
-                 <div>
-                  <p className="text-[10px] font-bold uppercase text-slate-400 tracking-widest mb-1">Degree Program</p>
-                  <p className="font-bold text-lg text-slate-900 leading-tight">{degreeName}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold uppercase text-slate-400 tracking-widest mb-1">Batch</p>
-                  <p className="font-mono text-lg text-slate-700">{batch || "_______________________"}</p>
-                </div>
-              </div>
-            </div>
+          <div className="text-right">
+            <p className="text-[10px] font-black bg-slate-900 text-white px-3 py-1 uppercase tracking-widest inline-block mb-2">
+              Internal GPA Statement
+            </p>
+            <p className="text-xs font-mono font-bold text-slate-500">{date}</p>
           </div>
+        </div>
 
-          {/* --- MODULE TABLES --- */}
-          <div className="grid grid-cols-2 gap-x-12 gap-y-10 mb-12">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((sem) => {
-              const modules = semesterData[sem.toString()] || [];
-              const hasData = modules.some(m => m.grade !== "");
-              if (!hasData) return null;
+        {/* --- STUDENT IDENTITY --- */}
+        <div className="grid grid-cols-3 gap-6 mb-12 relative z-10 bg-slate-50 p-8 rounded-3xl border border-slate-200">
+          <div className="space-y-1">
+            <p className="text-[9px] font-black uppercase text-slate-400 tracking-[0.2em]">Student Full Name</p>
+            <p className="text-xl font-serif font-black uppercase">{studentName || "N/A"}</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[9px] font-black uppercase text-slate-400 tracking-[0.2em]">Primary Degree Path</p>
+            <p className="text-lg font-bold leading-tight">{degreeName}</p>
+          </div>
+          <div className="space-y-1 text-right">
+            <p className="text-[9px] font-black uppercase text-slate-400 tracking-[0.2em]">Identification / Batch</p>
+            <p className="text-lg font-mono font-bold">{studentId || "N/A"} <span className="text-slate-300 mx-1">/</span> {batch || "N/A"}</p>
+          </div>
+        </div>
 
-              return (
-                <div key={sem} className="break-inside-avoid">
-                  <div className="flex items-center justify-between mb-4 border-b-2 border-slate-100 pb-2">
-                    <h3 className="font-bold text-lg text-slate-900">Semester {sem}</h3>
-                    <span className="text-[9px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded border border-slate-200">RECORDED</span>
-                  </div>
-                  <table className="w-full text-xs">
-                    <thead>
-                      <tr className="text-slate-400 border-b border-slate-50">
-                        <th className="pb-2 text-left font-semibold uppercase tracking-wider">Module</th>
-                        <th className="pb-2 text-center font-semibold uppercase tracking-wider w-10">Cr</th>
-                        <th className="pb-2 text-right font-semibold uppercase tracking-wider w-10">Grd</th>
+        {/* --- ACADEMIC TRANSCRIPT --- */}
+        <div className="grid grid-cols-2 gap-x-16 gap-y-10 mb-12 relative z-10">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((sem) => {
+            const modules = semesterData[sem.toString()] || [];
+            if (!modules.some(m => m.grade !== "")) return null;
+
+            return (
+              <div key={sem} className="break-inside-avoid">
+                <div className="flex justify-between items-end border-b-2 border-slate-900 pb-1 mb-3">
+                  <h3 className="font-black text-sm uppercase tracking-widest italic">Semester {sem}</h3>
+                  <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Validated Entry</span>
+                </div>
+                <table className="w-full text-[11px]">
+                  <thead>
+                    <tr className="text-slate-400 border-b border-slate-100">
+                      <th className="pb-1 text-left uppercase tracking-tighter">Module Description</th>
+                      <th className="pb-1 text-center w-8 italic">Cr</th>
+                      <th className="pb-1 text-right w-10 uppercase">Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody className="font-bold">
+                    {modules.map((m) => m.grade !== "" && (
+                      <tr key={m.id} className="border-b border-dashed border-slate-100">
+                        <td className="py-1.5 pr-4 uppercase truncate max-w-[180px]">{m.name}</td>
+                        <td className="py-1.5 text-center text-slate-400 font-mono">{m.credits}</td>
+                        <td className="py-1.5 text-right font-black text-slate-900">{m.grade}</td>
                       </tr>
-                    </thead>
-                    <tbody className="text-slate-700 font-medium">
-                      {modules.map((m) => (
-                        m.grade !== "" && (
-                          <tr key={m.id} className="border-b border-dashed border-slate-100 last:border-0">
-                            <td className="py-2 pr-2">{m.name}</td>
-                            <td className="py-2 text-center text-slate-400 font-mono">{m.credits}</td>
-                            <td className="py-2 text-right font-bold text-slate-900 font-mono">{m.grade}</td>
-                          </tr>
-                        )
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              );
-            })}
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* --- STRATEGIC SUMMARY --- */}
+        <div className="mt-auto break-inside-avoid relative z-10 pt-10">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="h-px flex-grow bg-slate-200" />
+            <h3 className="text-xs font-black uppercase tracking-[0.5em] text-slate-400">Strategic Forecast</h3>
+            <div className="h-px flex-grow bg-slate-200" />
           </div>
 
-          {/* --- BOTTOM SECTION (Grouped) --- */}
-          <div className="break-inside-avoid">
-            
-            {/* STRATEGIC ROADMAP */}
-            <div className="mb-8">
-              <div className="flex items-center gap-3 mb-6">
-                 <div className="h-px flex-grow bg-slate-200"></div>
-                 <h3 className="text-sm font-bold text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2">
-                    <Target className="w-4 h-4" /> Strategic Roadmap
-                 </h3>
-                 <div className="h-px flex-grow bg-slate-200"></div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-5">
-                {renderMilestone("First Class", targets.first, Trophy)}
-                {renderMilestone("Second Upper", targets.secondUpper, Medal)}
-                {renderMilestone("Second Lower", targets.secondLower, Star)}
-              </div>
-            </div>
-
-            {/* CURRENT STATUS BAR */}
-            <div className="bg-slate-900 text-white p-6 rounded-xl flex justify-between items-center shadow-lg print:shadow-none mb-8 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 z-0"></div>
-              <div className="relative z-10">
-                <p className="text-[10px] uppercase font-bold text-slate-400 tracking-[0.2em] mb-1">Current Status</p>
-                <p className="text-xl font-serif font-bold">{getDegreeClass(finalGPA)}</p>
-              </div>
-              <div className="text-right relative z-10">
-                <p className="text-[10px] uppercase font-bold text-slate-400 tracking-[0.2em] mb-1">Cumulative GPA</p>
-                <p className="text-4xl font-black tracking-tighter">{finalGPA}</p>
-              </div>
-            </div>
-
-            {/* FOOTER & DEVELOPER LINK */}
-            <div className="text-center pt-4">
-              <p className="font-serif italic text-slate-500 text-xs mb-4">
-                &quot;Success is not final, failure is not fatal: it is the courage to continue that counts.&quot;
-              </p>
-              
-              <div className="inline-flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full border border-slate-100">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Powered By</span>
-                <span className="text-xs font-bold text-slate-900">SLTC GPA Calculator</span>
-                <span className="text-slate-300">|</span>
-                <a href="https://www.ruwansanjeewa.com" target="_blank" className="text-xs font-bold text-blue-600 hover:text-blue-800 no-underline transition-colors">
-                  Ruwan Sanjeewa
-                </a>
-              </div>
-            </div>
-
+          <div className="grid grid-cols-3 gap-6 mb-10">
+            {renderMilestone("First Class", targets.first, Trophy)}
+            {renderMilestone("Second Upper", targets.secondUpper, Medal)}
+            {renderMilestone("Second Lower", targets.secondLower, Star)}
           </div>
 
+          <div className="bg-slate-900 text-white p-8 rounded-2xl flex justify-between items-center shadow-2xl relative overflow-hidden">
+             <div className="relative z-10">
+                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 mb-1">Degree Classification</p>
+                <p className="text-3xl font-serif font-black italic">{getDegreeClass(finalGPA)}</p>
+             </div>
+             <div className="text-right relative z-10">
+                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 mb-1">Cumulative GPA</p>
+                <p className="text-6xl font-black tracking-tighter leading-none italic">{finalGPA}</p>
+             </div>
+          </div>
+          
+          <div className="mt-12 text-center">
+            <div className="flex justify-center gap-16 mb-8">
+               <div className="w-48 border-t border-slate-400 pt-2 text-[8px] font-black uppercase tracking-widest text-slate-400">Registrar / Academic Head</div>
+               <div className="w-48 border-t border-slate-400 pt-2 text-[8px] font-black uppercase tracking-widest text-slate-400">Candidate Signature</div>
+            </div>
+            <p className="text-[9px] font-black uppercase tracking-[0.5em] text-slate-300">
+               Automated GPA Intelligence Statement • SLTC Research University • Generated via GPA Pro
+            </p>
+          </div>
         </div>
       </div>
     </div>

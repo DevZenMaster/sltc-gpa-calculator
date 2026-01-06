@@ -1,168 +1,180 @@
+"use client";
+
+import React from "react";
 import Link from "next/link";
-import { Calculator, ArrowRight, BookOpen, Star, Trophy } from "lucide-react";
+import { 
+  Calculator, ArrowRight, BookOpen, Star, Trophy, 
+  Target, Info, ChevronRight, Zap, GraduationCap 
+} from "lucide-react";
 
 export default function GuidePage() {
   return (
-    <div className="bg-slate-50 dark:bg-slate-950 min-h-screen text-slate-900 dark:text-slate-100 selection:bg-blue-100 selection:text-blue-900 pb-20 transition-colors duration-300">
+    <div className="bg-white dark:bg-[#030303] min-h-screen text-slate-900 dark:text-slate-100 selection:bg-blue-100 selection:text-blue-900 pb-24 transition-colors duration-500">
       
-      {/* --- PAGE HEADER --- */}
-      <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 pt-32 pb-12 px-6 transition-colors">
-        <div className="max-w-4xl mx-auto text-center">
-           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-blue-700 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-4">
-            <BookOpen className="w-3 h-3" />
-            Academic Regulation
+      {/* --- HERO HEADER: ACADEMIC PROTOCOLS --- */}
+      <div className="relative pt-32 pb-20 px-6 overflow-hidden border-b border-slate-100 dark:border-white/5">
+        {/* Background Ambient Spectrum */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-40">
+          <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-10%] right-[-5%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px] rounded-full" />
+        </div>
+
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase tracking-[0.3em] mb-6 italic">
+            <GraduationCap className="w-3 h-3 text-blue-600" />
+            Official SLTC Grading Protocol
           </div>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-4">
-            How GPA is Calculated
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-slate-900 dark:text-white mb-6 uppercase italic leading-none">
+            GPA <span className="text-blue-600">Mechanics.</span>
           </h1>
-          <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
-            Everything you need to know about Grade Points, Credits, and Degree Classifications at SLTC.
+          <p className="text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium italic leading-relaxed">
+            Technical documentation for Grade Point Average calculations, weighted credit analysis, and honor classifications.
           </p>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 py-12 space-y-16">
+      <div className="max-w-5xl mx-auto px-6 py-20 space-y-24">
 
-        {/* --- SECTION 1: THE FORMULA --- */}
-        <section>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-            <Calculator className="text-blue-600 dark:text-blue-400" />
-            The Formula
-          </h2>
-          <div className="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
-            <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
-              Your Grade Point Average (GPA) is a weighted average. This means modules with higher credits (like 3 or 4 credits) have a bigger impact on your final result than smaller modules.
-            </p>
-            
-            <div className="bg-slate-50 dark:bg-slate-950 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center transition-colors">
-              <div className="font-serif text-xl md:text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">
-                GPA = <span className="inline-block border-b-2 border-slate-400 dark:border-slate-600 px-2 mx-1">Total Grade Points</span>
-              </div>
-              <div className="font-serif text-xl md:text-2xl font-bold text-slate-800 dark:text-slate-200">
-                Total Credits
-              </div>
+        {/* --- SECTION 1: THE INTELLIGENCE FORMULA --- */}
+        <section className="relative">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="p-3 bg-blue-600 text-white rounded-2xl shadow-xl shadow-blue-500/20">
+               <Calculator size={24} />
             </div>
-
-            <div className="mt-6 text-sm text-slate-500 dark:text-slate-400 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-900/50">
-              <strong>Example:</strong> If you get an &apos;A&apos; (4.00) in a 3-credit module, you earn <strong>12.00 Grade Points</strong> (4.00 × 3). You simply sum up all points and divide by total credits.
-            </div>
+            <h2 className="text-3xl font-black uppercase tracking-tighter italic leading-none">The Logic Engine</h2>
           </div>
-        </section>
-
-        {/* --- SECTION 2: GRADING SCALE --- */}
-        <section>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-            <Star className="text-amber-500" />
-            Grading Scale
-          </h2>
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-colors">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 text-xs uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider">
-                  <th className="p-4">Grade</th>
-                  <th className="p-4">Grade Point (GP)</th>
-                  <th className="p-4 hidden md:table-cell">Description</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-sm font-medium text-slate-700 dark:text-slate-300">
-                {[
-                  { g: "A+", p: "4.00", d: "Superior" },
-                  { g: "A",  p: "4.00", d: "Excellent" },
-                  { g: "A-", p: "3.70", d: "Excellent" },
-                  { g: "B+", p: "3.30", d: "Very Good" },
-                  { g: "B",  p: "3.00", d: "Good" },
-                  { g: "B-", p: "2.70", d: "Good" },
-                  { g: "C+", p: "2.30", d: "Credit Pass" },
-                  { g: "C",  p: "2.00", d: "Pass" },
-                  { g: "C-", p: "1.70", d: "Weak Pass" },
-                  { g: "D+", p: "1.30", d: "Conditional Pass" },
-                  { g: "D",  p: "1.00", d: "Conditional Pass" },
-                  { g: "E",  p: "0.00", d: "Fail" },
-                ].map((row, i) => (
-                  <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-                    <td className="p-4 font-bold text-slate-900 dark:text-white">{row.g}</td>
-                    <td className="p-4 font-mono">{row.p}</td>
-                    <td className="p-4 text-slate-500 dark:text-slate-400 hidden md:table-cell">{row.d}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        {/* --- SECTION 3: DEGREE CLASSES --- */}
-        <section>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-            <Trophy className="text-blue-600 dark:text-blue-400" />
-            Degree Classifications
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
-            {/* First Class */}
-            <div className="p-6 bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-100 dark:border-slate-800 hover:border-amber-200 dark:hover:border-amber-900/50 transition-all shadow-sm group">
-              <div className="flex justify-between items-start mb-4">
-                 <h3 className="font-bold text-lg text-slate-900 dark:text-white">First Class</h3>
-                 <span className="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-bold px-2 py-1 rounded">GPA 3.70+</span>
-              </div>
-              <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">
-                The highest academic distinction. Requires consistent excellence across all semesters.
-              </p>
-              <div className="text-xs font-mono text-slate-400 dark:text-slate-500">Target: Mostly A and A- grades.</div>
-            </div>
-
-            {/* Second Upper */}
-            <div className="p-6 bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-900/50 transition-all shadow-sm group">
-              <div className="flex justify-between items-start mb-4">
-                 <h3 className="font-bold text-lg text-slate-900 dark:text-white">Second Class (Upper)</h3>
-                 <span className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-bold px-2 py-1 rounded">GPA 3.30+</span>
-              </div>
-              <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">
-                A highly respected classification, often required for top-tier postgraduate programs.
-              </p>
-              <div className="text-xs font-mono text-slate-400 dark:text-slate-500">Target: Mix of B+ and A- grades.</div>
-            </div>
-
-            {/* Second Lower */}
-            <div className="p-6 bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all shadow-sm group">
-              <div className="flex justify-between items-start mb-4">
-                 <h3 className="font-bold text-lg text-slate-900 dark:text-white">Second Class (Lower)</h3>
-                 <span className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold px-2 py-1 rounded">GPA 3.00+</span>
-              </div>
-              <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">
-                Demonstrates solid understanding and competence in the field of study.
-              </p>
-              <div className="text-xs font-mono text-slate-400 dark:text-slate-500">Target: Consistent B average.</div>
-            </div>
-
-            {/* General Pass */}
-            <div className="p-6 bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-100 dark:border-slate-800 transition-all shadow-sm opacity-70">
-              <div className="flex justify-between items-start mb-4">
-                 <h3 className="font-bold text-lg text-slate-900 dark:text-white">General Pass</h3>
-                 <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-xs font-bold px-2 py-1 rounded">GPA 2.00+</span>
-              </div>
-              <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">
-                You have successfully completed the degree requirements.
-              </p>
-              <div className="text-xs font-mono text-slate-400 dark:text-slate-500">Target: Minimum C average.</div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* --- CALL TO ACTION --- */}
-        <div className="bg-slate-900 dark:bg-slate-900 rounded-2xl p-8 md:p-12 text-center text-white relative overflow-hidden border border-slate-800">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[100px] opacity-30 translate-x-1/3 -translate-y-1/3"></div>
           
-          <div className="relative z-10">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Check Your Standing Now</h2>
-            <p className="text-slate-400 dark:text-slate-300 mb-8 max-w-lg mx-auto">
-              Don&apos;t guess where you stand. Use our calculator to see exactly how far you are from your next class target.
-            </p>
-            <Link href="/calculator" className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-3 rounded-xl font-bold hover:bg-blue-50 transition-colors">
-              Go to Calculator
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <p className="text-lg text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                The GPA is a <span className="text-slate-900 dark:text-white font-black italic uppercase">Weighted Index</span>. Unlike a simple average, modules with higher credit values exert a proportionately greater influence on your terminal classification.
+              </p>
+              
+              <div className="p-6 rounded-3xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600"><Info size={16}/></div>
+                  <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                    Calculations are performed by multiplying the Grade Point (GP) of each module by its Credit value, summing the results, and dividing by the total credits attempted.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative group p-1 w-full max-w-md mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[2.5rem] blur-xl opacity-20 group-hover:opacity-40 transition-opacity" />
+              <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 p-10 rounded-[2.5rem] text-center shadow-2xl">
+                 <div className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 mb-6">Algorithm Visualization</div>
+                 {/* Fixed Formula string for Next.js 16/Turbopack */}
+                 <div className="font-serif text-2xl md:text-3xl font-black tracking-tight text-slate-900 dark:text-white mb-2 italic leading-none">
+                    {"GPA = \\frac{\\sum (GP_i \\times C_i)}{\\sum C_i}"}
+                 </div>
+                 <div className="text-[10px] font-bold text-slate-400 mt-6 italic uppercase tracking-widest">Where GP = Grade Point | C = Credits</div>
+              </div>
+            </div>
           </div>
+        </section>
+
+        
+
+        {/* --- SECTION 2: GRADING SCALE MATRIX --- */}
+        <section>
+          <div className="flex items-center gap-4 mb-10">
+            <div className="p-3 bg-amber-500 text-white rounded-2xl shadow-xl shadow-amber-500/20">
+               <Star size={24} />
+            </div>
+            <h2 className="text-3xl font-black uppercase tracking-tighter italic leading-none">Grading Scale Matrix</h2>
+          </div>
+
+          <div className="rounded-[3rem] border border-slate-100 dark:border-white/5 bg-white dark:bg-white/[0.01] overflow-hidden shadow-2xl">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-slate-50 dark:bg-white/5 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+                    <th className="p-8">Tier</th>
+                    <th className="p-8">Alpha Grade</th>
+                    <th className="p-8">Intelligence Point (GP)</th>
+                    <th className="p-8 hidden md:table-cell text-right">Standard Definition</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-white/5 text-sm font-black uppercase tracking-widest">
+                  {[
+                    { g: "A+", p: "4.00", d: "Superior Performance", color: "text-blue-600" },
+                    { g: "A",  p: "4.00", d: "Excellent Proficiency", color: "text-blue-600" },
+                    { g: "A-", p: "3.70", d: "Excellent Proficiency", color: "text-indigo-600" },
+                    { g: "B+", p: "3.30", d: "Very Good Understanding", color: "text-emerald-600" },
+                    { g: "B",  p: "3.00", d: "Good Competence", color: "text-emerald-600" },
+                    { g: "C+", p: "2.30", d: "Credit Pass Standard", color: "text-amber-600" },
+                    { g: "C",  p: "2.00", d: "Satisfactory Pass", color: "text-slate-400" },
+                    { g: "E",  p: "0.00", d: "Failure / No Credit", color: "text-red-600" },
+                  ].map((row, i) => (
+                    <tr key={i} className="hover:bg-slate-50 dark:hover:bg-white/[0.02] transition-colors group">
+                      <td className="p-8 text-slate-400">0{i + 1}</td>
+                      <td className={`p-8 text-2xl font-black italic ${row.color}`}>{row.g}</td>
+                      <td className="p-8 font-mono text-lg">{row.p}</td>
+                      <td className="p-8 text-slate-500 dark:text-slate-400 font-medium italic hidden md:table-cell text-right lowercase">{row.d}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* --- SECTION 3: HONOR CLASSIFICATIONS --- */}
+        <section>
+          <div className="flex items-center gap-4 mb-10">
+            <div className="p-3 bg-indigo-600 text-white rounded-2xl shadow-xl shadow-indigo-500/20">
+               <Trophy size={24} />
+            </div>
+            <h2 className="text-3xl font-black uppercase tracking-tighter italic leading-none">Honor Classifications</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              { title: "First Class", gpa: "3.70+", icon: <Zap size={20}/>, theme: "bg-blue-600", desc: "The highest academic distinction. Requires a near-flawless trajectory across all semesters." },
+              { title: "Second Upper", gpa: "3.30+", icon: <Target size={20}/>, theme: "bg-indigo-600", desc: "A prestigious tier demonstrating consistent technical and theoretical excellence." },
+              { title: "Second Lower", gpa: "3.00+", icon: <ChevronRight size={20}/>, theme: "bg-slate-800", desc: "A solid academic standing reflecting competence and steady performance." },
+              { title: "General Pass", gpa: "2.00+", icon: <Info size={20}/>, theme: "bg-slate-400", desc: "Attained by successfully completing the minimum required curriculum standards." }
+            ].map((tier) => (
+              <div key={tier.title} className="p-10 rounded-[3rem] bg-white dark:bg-white/[0.02] border border-slate-100 dark:border-white/5 shadow-xl group hover:-translate-y-2 transition-all duration-500">
+                <div className="flex justify-between items-start mb-8">
+                   <div className={`p-4 rounded-2xl text-white shadow-xl ${tier.theme} group-hover:scale-110 transition-transform`}>
+                      {tier.icon}
+                   </div>
+                   <div className="text-right">
+                      <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Threshold</div>
+                      <div className="text-2xl font-black italic tracking-tighter text-blue-600">{tier.gpa}</div>
+                   </div>
+                </div>
+                <h3 className="text-2xl font-black uppercase tracking-tighter italic mb-4">{tier.title}</h3>
+                <p className="text-slate-500 dark:text-slate-400 font-medium text-sm leading-relaxed lowercase italic">
+                  {tier.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        
+
+        {/* --- FINAL ACTION --- */}
+        <div className="p-16 rounded-[4rem] bg-slate-900 dark:bg-blue-600 text-center text-white relative overflow-hidden group shadow-3xl">
+           <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 opacity-20" />
+           <div className="relative z-10 space-y-6">
+              <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic leading-none">Initialize <br /> <span className="text-blue-400 dark:text-slate-950">Calculations.</span></h2>
+              <p className="text-blue-100/60 max-w-xl mx-auto font-medium text-lg italic">
+                Ready to forecast your classification? Access the Intelligence Engine now.
+              </p>
+              <div className="pt-6">
+                <Link 
+                  href="/calculator" 
+                  className="inline-flex items-center gap-4 bg-white text-slate-900 px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:scale-105 transition-all shadow-2xl"
+                >
+                  Launch Dashboard
+                  <ArrowRight size={18} />
+                </Link>
+              </div>
+           </div>
         </div>
 
       </div>

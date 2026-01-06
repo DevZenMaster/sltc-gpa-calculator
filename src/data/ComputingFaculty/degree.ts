@@ -1,6 +1,6 @@
 import { DegreeProgram } from "@/types/module";
 
-export const DEGREES: DegreeProgram[] = [
+export const COMPUTING_DEGREES: DegreeProgram[] = [
   {
     id: "se",
     name: "BSc Hons in Software Engineering",
@@ -358,7 +358,7 @@ export const DEGREES: DegreeProgram[] = [
   },
   {
     id: "ait",
-    name: "Degree in Applied IT",
+    name: "Bachelor of Applied Information Technology",
     semesters: {
       "1": [
         { name: "CIT100 Essentials of IT", credits: 3, type: "Core" },
